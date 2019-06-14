@@ -10,8 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    @IBAction private func didTapButton() {
+        presentVC()
+    }
+    private func presentVC() {
+        let vc = StarwarsViewController()
+        present(vc, animated: true, completion: nil)
     }
 }
