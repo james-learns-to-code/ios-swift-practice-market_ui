@@ -13,13 +13,5 @@ final class StarwarsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        StarwarsNetworkManager.shared.requestApiList { [weak self] result in
-            switch result {
-            case .success(let value):
-                print(value)
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }
