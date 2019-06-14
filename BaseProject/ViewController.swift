@@ -10,11 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBAction private func didTapButton() {
+    @IBAction private func didTapFirstButton() {
         presentVC()
     }
     private func presentVC() {
         let vc = StarwarsViewController()
+        present(vc, animated: true, completion: nil)
+    }
+ 
+    @IBAction private func didTapSecondButton() {
+        presentVCWithView()
+    }
+    private func presentVCWithView() {
+        let vc = StarwarsViewControllerWithView()
         present(vc, animated: true, completion: nil)
     }
 }

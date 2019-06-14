@@ -23,7 +23,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="didTapButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="IzN-XF-4ir"/>
+                                    <action selector="didTapFirstButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="b3C-OL-sf9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Jd-lw-hrW">
+                                <rect key="frame" x="184" y="241" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="didTapSecondButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="1dF-vo-fjQ"/>
                                 </connections>
                             </button>
                         </subviews>
