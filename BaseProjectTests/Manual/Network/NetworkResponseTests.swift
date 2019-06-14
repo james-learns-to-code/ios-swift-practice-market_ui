@@ -21,10 +21,10 @@ class NetworkResponseTests: QuickSpec {
 
         // Network response have to be callback properly
         describe("Network request") {
-            it("Have to be callback properly") {
-                context("Starwars api list") {
+            context("Starwars api list") {
+                it("Have to be callback properly") {
                     waitUntil(timeout: timeout) { done in
-                        StarwarsNetworkManager.shared.requestApiList { result in
+                        StarwarsNetworkManager.shared.requestFilmList { result in
                             if case .success = result {} else { fail() }
                             done()
                         }
