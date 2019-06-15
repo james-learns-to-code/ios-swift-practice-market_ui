@@ -25,4 +25,12 @@ class ViewController: UIViewController {
         let vc = StarwarsViewControllerWithView()
         present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction private func didTapThirdButton() {
+        presentVCWithXib()
+    }
+    private func presentVCWithXib() {
+        let vc = StarwarsViewControllerWithXib(nibName: "StarwarsViewControllerWithXib", bundle: nil)
+        present(vc, animated: true, completion: nil)
+    }
 }
