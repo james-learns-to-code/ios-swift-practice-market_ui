@@ -43,10 +43,21 @@ class NetworkManager {
     }
     
     // MARK: Request
+    
+    typealias DataResult = Result<Data, Error>
+    typealias DataResultHandler = (DataResult) -> Void
+    
+    func request(
+        by urlString: String,
+        type: RequestType,
+        handler: @escaping DataResultHandler) {
+        let url = URL(string: urlString)
+        request(by: url, type: type, handler: handler)
+    }
     func request(
         by url: URL?,
         type: RequestType,
-        handler: @escaping (Result<Data, Error>) -> Void) {
+        handler: @escaping DataResultHandler) {
         
         guard let url = url else {
             handler(.failure(NetworkManager.error(with: .urlError)))
@@ -75,9 +86,9 @@ class NetworkManager {
     }
     
     // MARK: Handler
-    struct Handler<Type: Decodable> {
+    struct ResultType<Type: Decodable> {
         static func handle(
-            _ result: Result<Data, Error>,
+            _ result: DataResult,
             handler: @escaping (Result<Type, Error>) -> Void) {
             
             switch result {
