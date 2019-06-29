@@ -8,27 +8,32 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
+    // MARK: Action
+    
     @IBAction private func didTapFirstButton() {
         presentVC()
     }
+    @IBAction private func didTapSecondButton() {
+        presentVCWithView()
+    }
+    @IBAction private func didTapThirdButton() {
+        presentVCWithXib()
+    }
+    
+    // MARK: Present
+    
     private func presentVC() {
         let vc = StarwarsViewController()
         present(vc, animated: true, completion: nil)
     }
- 
-    @IBAction private func didTapSecondButton() {
-        presentVCWithView()
-    }
+    
     private func presentVCWithView() {
         let vc = StarwarsViewControllerWithView()
         present(vc, animated: true, completion: nil)
     }
     
-    @IBAction private func didTapThirdButton() {
-        presentVCWithXib()
-    }
     private func presentVCWithXib() {
         let vc = StarwarsViewControllerWithXib(nibName: "StarwarsViewControllerWithXib", bundle: nil)
         present(vc, animated: true, completion: nil)

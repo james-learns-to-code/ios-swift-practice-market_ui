@@ -25,6 +25,8 @@ final class StarwarsViewControllerWithView: UIViewController {
         viewModel.fetchApiList()
     }
     
+    // MARK: Setup
+    
     private func setup() {
         addTableView()
         setupBinding()

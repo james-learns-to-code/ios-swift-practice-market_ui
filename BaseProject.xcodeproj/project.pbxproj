@@ -194,11 +194,11 @@
 		1CC76F2322B3D2DB00D39971 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				94195F2E22B4AD74001B788B /* StarwarsViewControllerWithXib.xib */,
+				94195F2C22B4AD4C001B788B /* StarwarsViewControllerWithXib.swift */,
 				9437FB4822B425A800CE74C5 /* StarwarsViewControllerWithView.swift */,
 				1CC76F2622B3D3AF00D39971 /* StarwarsViewController.swift */,
 				9437FB4522B4230000CE74C5 /* StarwarsViewModel.swift */,
-				94195F2C22B4AD4C001B788B /* StarwarsViewControllerWithXib.swift */,
-				94195F2E22B4AD74001B788B /* StarwarsViewControllerWithXib.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

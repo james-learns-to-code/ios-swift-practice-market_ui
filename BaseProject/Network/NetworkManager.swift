@@ -43,14 +43,7 @@ class NetworkManager {
     }
     
     // MARK: Request
-    
-    func sendGetRequest(
-        by url: URL?,
-        handler: @escaping (Result<Data, Error>) -> Void) {
-        sendRequest(by: url, type: .get, handler: handler)
-    }
-    
-    func sendRequest(
+    func request(
         by url: URL?,
         type: RequestType,
         handler: @escaping (Result<Data, Error>) -> Void) {
@@ -67,6 +60,7 @@ class NetworkManager {
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) {
             (responseData, response, responseError) in
+            
             guard responseError == nil else {
                 handler(.failure(NetworkManager.error(with: .responseError)))
                 return
@@ -79,25 +73,26 @@ class NetworkManager {
         }
         task.resume()
     }
-}
-
-final class NetworkResultHandler<T: Decodable> {
     
-    static func handleResult(
-        _ result: Result<Data, Error>,
-        handler: @escaping (Result<T, Error>) -> Void) {
-        
-        switch result {
-        case .success(let value):
-            let decoder = JSONDecoder()
-            guard let model = try? decoder.decode(T.self, from: value) else {
-                handler(.failure(NetworkManager.error(with: .jsonEncodingError)))
-                return
-            }
-            handler(.success(model))
+    // MARK: Handler
+    struct Handler<Type: Decodable> {
+        static func handle(
+            _ result: Result<Data, Error>,
+            handler: @escaping (Result<Type, Error>) -> Void) {
             
-        case .failure(let error):
-            handler(.failure(error))
+            switch result {
+            case .success(let value):
+                let decoder = JSONDecoder()
+                guard let model = try? decoder.decode(Type.self, from: value) else {
+                    handler(.failure(NetworkManager.error(with: .jsonEncodingError)))
+                    return
+                }
+                handler(.success(model))
+                
+            case .failure(let error):
+                handler(.failure(error))
+            }
         }
     }
 }
+

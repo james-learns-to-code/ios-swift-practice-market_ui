@@ -19,6 +19,8 @@ final class StarwarsViewControllerWithXib: UIViewController {
         viewModel.fetchApiList()
     }
     
+    // MARK: Setup
+    
     private func setup() {
         setupTableView()
         setupBinding()
