@@ -17,6 +17,8 @@ final class StarwarsViewController: UIViewController {
         return view
     }()
     
+    // MARK: Lifecycle
+    
     override func loadView() {
         super.loadView()
         view = customView
@@ -27,6 +29,8 @@ final class StarwarsViewController: UIViewController {
         setup()
         viewModel.fetchApiList()
     }
+    
+    // MARK: Setup
     
     private func setup() {
         setupBinding()

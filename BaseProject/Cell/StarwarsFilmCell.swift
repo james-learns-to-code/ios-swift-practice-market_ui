@@ -9,16 +9,13 @@
 import UIKit
 
 struct StarwarsFilmCellViewModel {
-    let film: StarwarsFilmModel?
-    
-    var title: String {
+    static func getTitle(from film: StarwarsFilmModel?) -> String {
         return "\(film?.episode_id ?? 0) \(film?.title ?? "") - \(film?.director ?? "")"
     }
 }
 
 final class StarwarsFilmCell: UITableViewCell {
     func configure(film: StarwarsFilmModel?) {
-        let viewModel = StarwarsFilmCellViewModel(film: film)
-        textLabel?.text = viewModel.title
+        textLabel?.text = StarwarsFilmCellViewModel.getTitle(from: film)
     }
 }

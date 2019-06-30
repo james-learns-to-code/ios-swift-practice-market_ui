@@ -29,6 +29,8 @@ final class StarwarsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Setup
+    
     private func setup() {
         backgroundColor = .red
         addTableView()
