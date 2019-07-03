@@ -8,27 +8,39 @@
 
 import Foundation
 
+enum NetworkError: Error {
+    case url
+    case response(error: Error?)
+    case data
+    case jsonEncoding
+    
+    var code: Int {
+        switch self {
+        case .url: return 1
+        case .response: return 2
+        case .data: return 3
+        case .jsonEncoding: return 4
+        }
+    }
+    
+    var value: NSError {
+        var userInfo = [String: Any]()
+        if case .response(let error) = self {
+            userInfo["error"] = error
+        }
+        return NSError(domain: NetworkError.domain, code: self.code, userInfo: userInfo)
+    }
+    
+    static let domain = "app.network"
+}
+
 class NetworkManager {
-    
-    // MARK: Error
-    
-    enum ErrorCode: Int {
-        case urlError = 1
-        case responseError
-        case dataError
-        case jsonEncodingError
-    }
-    
-    static let errorDomain = "app.network"
-    static func error(with code: ErrorCode) -> NSError {
-        return NSError(domain: errorDomain, code: code.rawValue, userInfo: nil)
-    }
-    
-    // MARK: Header
     
     static let header: [String: String] = [
         "Content-Type": "application/json"
     ]
+    
+    // MARK: Request
     
     enum RequestType {
         case post
@@ -42,25 +54,16 @@ class NetworkManager {
         }
     }
     
-    // MARK: Request
-    
     typealias DataResult = Result<Data, Error>
     typealias DataResultHandler = (DataResult) -> Void
     
     func request(
-        by urlString: String,
-        type: RequestType,
-        handler: @escaping DataResultHandler) {
-        let url = URL(string: urlString)
-        request(by: url, type: type, handler: handler)
-    }
-    func request(
-        by url: URL?,
+        with url: URL?,
         type: RequestType,
         handler: @escaping DataResultHandler) {
         
         guard let url = url else {
-            handler(.failure(NetworkManager.error(with: .urlError)))
+            handler(.failure(NetworkError.url.value))
             return
         }
         var request = URLRequest(url: url)
@@ -73,11 +76,11 @@ class NetworkManager {
             (responseData, response, responseError) in
             
             guard responseError == nil else {
-                handler(.failure(NetworkManager.error(with: .responseError)))
+                handler(.failure(NetworkError.response(error: responseError).value))
                 return
             }
             guard let data = responseData else {
-                handler(.failure(NetworkManager.error(with: .dataError)))
+                handler(.failure(NetworkError.data.value))
                 return
             }
             handler(.success(data))
@@ -95,7 +98,7 @@ class NetworkManager {
             case .success(let value):
                 let decoder = JSONDecoder()
                 guard let model = try? decoder.decode(Type.self, from: value) else {
-                    handler(.failure(NetworkManager.error(with: .jsonEncodingError)))
+                    handler(.failure(NetworkError.jsonEncoding.value))
                     return
                 }
                 handler(.success(model))
@@ -107,3 +110,13 @@ class NetworkManager {
     }
 }
 
+// MARK: Interface
+extension NetworkManager {
+    func request(
+        with urlString: String,
+        type: RequestType,
+        handler: @escaping DataResultHandler) {
+        let url = URL(string: urlString)
+        request(with: url, type: type, handler: handler)
+    }
+}

@@ -11,15 +11,18 @@ import Foundation
 final class StarwarsNetworkManager: NetworkManager {
     static let shared = StarwarsNetworkManager()
     
-    static private let baseUrl = "https://swapi.co/api/"
-    static private let filmPath = "films/"
-    static private let filmUrl = baseUrl + filmPath
+    struct URL {
+        static let base = "https://swapi.co/api/"
+        static let filmPath = "films/"
+        static let film = base + filmPath
+    }
+}
 
-    // MARK: Interface
+// MARK: Interface
+extension StarwarsNetworkManager {
     func requestFilmList(
         handler: @escaping (Result<StarwarsFilmsModel, Error>) -> Void) {
-        
-        request(by: StarwarsNetworkManager.filmUrl, type: .get) { result in
+        request(with: StarwarsNetworkManager.URL.film, type: .get) { result in
             ResultType<StarwarsFilmsModel>
                 .handle(result, handler: handler)
         }
