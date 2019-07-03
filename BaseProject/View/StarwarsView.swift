@@ -16,14 +16,14 @@ final class StarwarsView: UIView {
         return view
     }()
     
-    convenience init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-        self.init(frame: .zero)
+    required init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+        super.init(frame: .zero)
+        setup()
         tableView.delegate = delegate
         tableView.dataSource = dataSource
     }
     override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
+        fatalError("init(frame:) has not been implemented")
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

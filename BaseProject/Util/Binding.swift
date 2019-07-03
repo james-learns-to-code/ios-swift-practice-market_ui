@@ -10,13 +10,11 @@ import Foundation
 
 final class Binding<T> {
     
+    private var listner: ((T?) -> Void)?
+
     var value: T? {
-        didSet {
-            listner?(value)
-        }
+        didSet { listner?(value) }
     }
-    
-    var listner: ((T?) -> Void)?
     
     func bind(listner: ((T?) -> Void)?) {
         self.listner = listner
