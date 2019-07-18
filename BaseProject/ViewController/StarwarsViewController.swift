@@ -21,11 +21,6 @@ final class StarwarsViewController: UIViewController {
     override func loadView() {
         super.loadView()
         view = customView
-    }
-    
-    // MARK: Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
         setup()
         viewModel.fetchApiList()
     }
