@@ -12,24 +12,7 @@ enum NetworkError: Error {
     case url
     case response(error: Error?)
     case data
-    case jsonEncoding
-    
-    var code: Int {
-        switch self {
-        case .url: return 1
-        case .response: return 2
-        case .data: return 3
-        case .jsonEncoding: return 4
-        }
-    }
-    
-    var value: NSError {
-        var userInfo = [String: Any]()
-        if case .response(let error) = self {
-            userInfo["error"] = error
-        }
-        return NSError(domain: NetworkError.domain, code: self.code, userInfo: userInfo)
-    }
+    case jsonEncoding(error: Error?)
     
     static let domain = "app.network"
 }
@@ -54,7 +37,7 @@ class NetworkManager {
         }
     }
     
-    typealias DataResult = Result<Data, Error>
+    typealias DataResult = Result<Data, NetworkError>
     typealias DataResultHandler = (DataResult) -> Void
     
     func request(
@@ -63,7 +46,7 @@ class NetworkManager {
         handler: @escaping DataResultHandler) {
         
         guard let url = url else {
-            handler(.failure(NetworkError.url.value))
+            handler(.failure(.url))
             return
         }
         var request = URLRequest(url: url)
@@ -76,11 +59,11 @@ class NetworkManager {
             (responseData, response, responseError) in
             
             guard responseError == nil else {
-                handler(.failure(NetworkError.response(error: responseError).value))
+                handler(.failure(.response(error: responseError)))
                 return
             }
             guard let data = responseData else {
-                handler(.failure(NetworkError.data.value))
+                handler(.failure(.data))
                 return
             }
             handler(.success(data))
@@ -92,17 +75,17 @@ class NetworkManager {
     struct ResultType<Type: Decodable> {
         static func handle(
             _ result: DataResult,
-            handler: @escaping (Result<Type, Error>) -> Void) {
+            handler: @escaping (Result<Type, NetworkError>) -> Void) {
             
             switch result {
-            case .success(let value):
-                let decoder = JSONDecoder()
-                guard let model = try? decoder.decode(Type.self, from: value) else {
-                    handler(.failure(NetworkError.jsonEncoding.value))
-                    return
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let value = try decoder.decode(Type.self, from: data)
+                    handler(.success(value))
+                } catch {
+                    handler(.failure(.jsonEncoding(error: error)))
                 }
-                handler(.success(model))
-                
             case .failure(let error):
                 handler(.failure(error))
             }

@@ -10,7 +10,7 @@ import UIKit
 
 final class StarwarsView: UIView {
     
-    lazy private var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let view = UITableView()
         view.register(StarwarsFilmCell.self, forCellReuseIdentifier: "StarwarsFilmCell")
         return view
@@ -32,7 +32,6 @@ final class StarwarsView: UIView {
     // MARK: Setup
     
     private func setup() {
-        backgroundColor = .red
         addTableView()
     }
     private func addTableView() {
@@ -44,9 +43,5 @@ final class StarwarsView: UIView {
             tableView.centerXAnchor.constraint(equalTo: centerXAnchor),
             tableView.centerYAnchor.constraint(equalTo: centerYAnchor),
             ])
-    }
-    
-    func reload() {
-        tableView.reloadData()
     }
 }
