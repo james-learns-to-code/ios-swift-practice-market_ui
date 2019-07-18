@@ -39,9 +39,13 @@ final class StarwarsViewController: UIViewController {
     private func setupBinding() {
         viewModel.films.bind() { [weak self] films in
             DispatchQueue.main.async {
-                self?.customView.reload()
+                self?.reload()
             }
         }
+    }
+    
+    private func reload() {
+        customView.tableView.reloadData()
     }
 }
 

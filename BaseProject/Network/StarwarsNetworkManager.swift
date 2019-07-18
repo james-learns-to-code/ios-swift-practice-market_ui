@@ -21,7 +21,7 @@ final class StarwarsNetworkManager: NetworkManager {
 // MARK: Interface
 extension StarwarsNetworkManager {
     func requestFilmList(
-        handler: @escaping (Result<StarwarsFilmsModel, Error>) -> Void) {
+        handler: @escaping (Result<StarwarsFilmsModel, NetworkError>) -> Void) {
         request(with: StarwarsNetworkManager.URL.film, type: .get) { result in
             ResultType<StarwarsFilmsModel>
                 .handle(result, handler: handler)
