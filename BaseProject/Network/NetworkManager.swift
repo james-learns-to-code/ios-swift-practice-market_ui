@@ -52,7 +52,11 @@ class NetworkManager {
         request(with: session, req, handler)
     }
     
-    func request(with session: URLSession, _ request: URLRequest, _ handler: @escaping DataResultHandler) {
+    func request(
+        with session: URLSession,
+        _ request: URLRequest,
+        _ handler: @escaping DataResultHandler) {
+        
         let task = session.dataTask(with: request) {
             (responseData, response, responseError) in
             
@@ -69,9 +73,9 @@ class NetworkManager {
         task.resume()
     }
     
-    // MARK: Handler
-    struct ResultType<Type: Decodable> {
-        static func handle(
+    // MARK: Decoder
+    struct ResponseType<Type: Decodable> {
+        static func decodeResult(
             _ result: DataResult,
             handler: @escaping (Result<Type, NetworkError>) -> Void) {
             
