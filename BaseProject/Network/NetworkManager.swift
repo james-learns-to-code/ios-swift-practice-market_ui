@@ -25,15 +25,12 @@ class NetworkManager {
     
     // MARK: Request
     
-    enum RequestType {
-        case post
-        case get
+    enum RequestType: String {
+        case post = "POST"
+        case get = "GET"
         
         var httpMethod: String {
-            switch self {
-            case .post: return "POST"
-            case .get: return "GET"
-            }
+            return self.rawValue
         }
     }
     
@@ -41,20 +38,25 @@ class NetworkManager {
     typealias DataResultHandler = (DataResult) -> Void
     
     func request(
-        with url: URL?,
+        with url: URL,
         type: RequestType,
         handler: @escaping DataResultHandler) {
         
-        guard let url = url else {
-            handler(.failure(.url))
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = type.httpMethod
-        request.allHTTPHeaderFields = NetworkManager.header
+        var req = URLRequest(url: url)
+        req.httpMethod = type.httpMethod
+        req.allHTTPHeaderFields = NetworkManager.header
         
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
+
+        request(with: session, req, handler)
+    }
+    
+    func request(
+        with session: URLSession,
+        _ request: URLRequest,
+        _ handler: @escaping DataResultHandler) {
+        
         let task = session.dataTask(with: request) {
             (responseData, response, responseError) in
             
@@ -71,9 +73,9 @@ class NetworkManager {
         task.resume()
     }
     
-    // MARK: Handler
-    struct ResultType<Type: Decodable> {
-        static func handle(
+    // MARK: Decoder
+    struct ResponseType<Type: Decodable> {
+        static func decodeResult(
             _ result: DataResult,
             handler: @escaping (Result<Type, NetworkError>) -> Void) {
             
@@ -99,7 +101,10 @@ extension NetworkManager {
         with urlString: String,
         type: RequestType,
         handler: @escaping DataResultHandler) {
-        let url = URL(string: urlString)
+        guard let url = URL(string: urlString) else {
+            handler(.failure(.url))
+            return
+        }
         request(with: url, type: type, handler: handler)
     }
 }
