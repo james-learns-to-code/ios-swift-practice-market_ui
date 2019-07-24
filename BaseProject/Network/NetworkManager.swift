@@ -12,7 +12,7 @@ enum NetworkError: Error {
     case url
     case response(error: Error?)
     case data
-    case jsonEncoding(error: Error?)
+    case jsonDecoding(error: Error?)
     
     static let domain = "app.network"
 }
@@ -86,7 +86,7 @@ class NetworkManager {
                     let value = try decoder.decode(Type.self, from: data)
                     handler(.success(value))
                 } catch {
-                    handler(.failure(.jsonEncoding(error: error)))
+                    handler(.failure(.jsonDecoding(error: error)))
                 }
             case .failure(let error):
                 handler(.failure(error))
