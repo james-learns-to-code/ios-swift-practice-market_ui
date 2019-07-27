@@ -11,10 +11,10 @@ For demonstrate use of api, i use swapi(https://swapi.co)
 For demonstrate diverse use case of ViewController, i create diverse ViewController
 
 ## Library
-Minimize use of Third-party library.
+I try to minimize use of Third-party library.
 
 ## View & ViewController
-I prefer separate view setup code to view-class side. It can archive by using view switching.
+I prefer separate view setup code from view-class side. It can archive by using view switching.
 
     override func loadView() {
         super.loadView()
