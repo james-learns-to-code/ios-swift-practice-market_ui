@@ -1,24 +1,21 @@
-# ios-swift-mvvm-project
-Example of MVVM with iOS, Swift Project
+# ios-swift-test-market
+
+Market application for iOS
 
 ## Purpose
-Demonstrate MVVM Architected project for iOS, Swift and improve continously.
 
-## API
-For demonstrate use of api, i use swapi(https://swapi.co)
+Demonstrate app for online market service.
 
-## ViewController
-For demonstrate diverse use case of ViewController, i create diverse ViewController
+## Echo server
 
-## Library
-I try to minimize use of Third-party library.
+For implement echo server, i made echo-server application using python(https://github.com/james-learns-to-code/python-http-echo-server).  
+For establishing echo server. I need a server instance.  
+I already has a AWS lightsail instance for running web server, but i don't wanna use it.  
+So i decide to using raspberry pi for running instance.  
 
-## View & ViewController
-I prefer separate view setup code from view-class side. It can archive by using view switching.
+## Routing
 
-    override func loadView() {
-        super.loadView()
-        view = customView
-    }
-
-When ViewController's loadView() is called, implant custom view to ViewController's view. Then you can put the view-setup code to view-class.
+I want to use my own domain 'http://goodeffect.com' for receiving request.  
+So i create A record named 'api' and directed raspberry pi's IP address.  
+Also my raspberry pi using WIFI connection, so i have to port forwarding for routing request to raspberry pi.   
+Therefore, api url is started with 'http://api.goodeffect.com:11000/  
