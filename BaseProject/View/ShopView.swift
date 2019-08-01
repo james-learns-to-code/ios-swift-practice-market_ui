@@ -1,5 +1,5 @@
 //
-//  StarwarsView.swift
+//  ShopView.swift
 //  BaseProject
 //
 //  Created by leedongseok on 14/06/2019.
@@ -8,11 +8,12 @@
 
 import UIKit
 
-final class StarwarsView: UIView {
+final class ShopView: UIView {
     
     lazy var tableView: UITableView = {
         let view = UITableView()
-        view.register(StarwarsFilmCell.self, forCellReuseIdentifier: "StarwarsFilmCell")
+        view.register(UITableViewCell.self)
+        view.register(BannersTableViewCell.self)
         return view
     }()
     
@@ -35,13 +36,6 @@ final class StarwarsView: UIView {
         addTableView()
     }
     private func addTableView() {
-        addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.heightAnchor.constraint(equalTo: heightAnchor),
-            tableView.widthAnchor.constraint(equalTo: widthAnchor),
-            tableView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            tableView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            ])
+        addSubviewWithFullsize(tableView) 
     }
 }
