@@ -40,11 +40,13 @@ class NetworkManager {
     func request(
         with url: URL,
         type: RequestType,
+        body: String? = nil,
         handler: @escaping DataResultHandler) {
         
         var req = URLRequest(url: url)
         req.httpMethod = type.httpMethod
         req.allHTTPHeaderFields = NetworkManager.header
+        req.httpBody = body?.data(using: .utf8) ?? nil
         
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
@@ -100,11 +102,12 @@ extension NetworkManager {
     func request(
         with urlString: String,
         type: RequestType,
+        body: String? = nil,
         handler: @escaping DataResultHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(.url))
             return
         }
-        request(with: url, type: type, handler: handler)
+        request(with: url, type: type, body: body, handler: handler)
     }
 }

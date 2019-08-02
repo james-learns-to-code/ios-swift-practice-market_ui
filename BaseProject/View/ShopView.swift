@@ -1,5 +1,5 @@
 //
-//  StarwarsView.swift
+//  ShopView.swift
 //  BaseProject
 //
 //  Created by leedongseok on 14/06/2019.
@@ -8,14 +8,25 @@
 
 import UIKit
 
-final class StarwarsView: UIView {
-    
+final class ShopView: UIView {
+     
+    // MARK: UI
     lazy var tableView: UITableView = {
-        let view = UITableView()
-        view.register(StarwarsFilmCell.self, forCellReuseIdentifier: "StarwarsFilmCell")
+        let view = UITableView(frame: .zero, style: .grouped)
+        view.separatorStyle = .none
+        view.sectionHeaderHeight = 0
+        view.sectionFooterHeight = 0
+        view.contentInset.bottom = CGFloat(ShopViewModel.bottomInset)
+        view.register(UITableViewCell.self)
+        view.register(BannersTableViewCell.self)
+        view.register(ProductCategoryTableViewCell.self)
+        view.register(CategoryItemsTableViewCell.self)
+        view.register(RecentTableViewCell.self)
+        view.register(NoticeTableViewCell.self)
         return view
     }()
     
+    // MARK: Lifecycle
     required init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         super.init(frame: .zero)
         setup()
@@ -35,13 +46,6 @@ final class StarwarsView: UIView {
         addTableView()
     }
     private func addTableView() {
-        addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.heightAnchor.constraint(equalTo: heightAnchor),
-            tableView.widthAnchor.constraint(equalTo: widthAnchor),
-            tableView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            tableView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            ])
+        addSubviewWithFullsize(tableView) 
     }
 }
