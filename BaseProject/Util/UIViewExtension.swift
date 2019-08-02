@@ -20,3 +20,10 @@ extension UIView {
             ])
     }
 }
+
+extension UIView {
+    convenience init(color: UIColor) {
+        self.init()
+        backgroundColor = color
+    }
+}

@@ -22,3 +22,11 @@ public extension UICollectionViewCellDequeueable where Self: UICollectionViewCel
 }
 
 extension UICollectionViewCell: UICollectionViewCellDequeueable {}
+
+extension UICollectionView {
+    public func isCellFullyVisible(indexPath: IndexPath) -> Bool {
+        guard let cell = cellForItem(at: indexPath) else { return false }
+        let relativeRect = convert(cell.frame, to: superview)
+        return frame.contains(relativeRect)
+    }
+}

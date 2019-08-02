@@ -11,6 +11,7 @@ import UIKit
 final class ViewController: UIViewController {
     func presentVC() {
         let vc = ShopViewController()
-        present(vc, animated: false, completion: nil)
+        let nav = UINavigationController(rootViewController: vc)
+        present(nav, animated: false, completion: nil)
     }
 }

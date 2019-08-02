@@ -29,6 +29,8 @@ struct ProductModel: Codable {
 struct ItemModel: Codable {
     let image: String
     let title: String
+    let promotion: String
+    let price: Double
 }
 
 struct NoticeModel: Codable {

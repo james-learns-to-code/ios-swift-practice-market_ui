@@ -15,7 +15,24 @@ final class ShopViewModel {
         case product
         case recent
         case notice
+        
+        enum ProductRow: Int {
+            case category
+            case item
+        }
     }
+    
+    static let bannerFooterHeight = 10
+    static let productSectionHeight = 60
+    static let productSectionTitle = "Product"
+    static let productFooterHeight = 10
+    static let recentSectionHeight = 60
+    static let recentSectionTitle = "Recently Viewed"
+    static let recentFooterHeight = 10
+    static let noticeSectionHeight = 60
+    static let noticeSectionTitle = "Notice"
+    static let numOfMaxItem = 6
+    static let bottomInset = 100
     
     // MARK: Data
     
@@ -42,11 +59,11 @@ final class ShopViewModel {
     func numberOfRowsInSection(_ section: Int) -> Int {
         switch section {
         case Section.banner.rawValue:
-            return banners?.count ?? 0
+            return (banners?.count ?? 0) > 0 ? 1 : 0
         case Section.product.rawValue:
-            return products?.count ?? 0
+            return (products?.count ?? 0) > 0 ? 2 : 0
         case Section.recent.rawValue:
-            return recents?.count ?? 0
+            return (recents?.count ?? 0) > 0 ? 1 : 0
         case Section.notice.rawValue:
             return notices?.count ?? 0
         default:

@@ -50,8 +50,13 @@ final class BannersTableViewCell: UITableViewCell {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.delegate = self
         view.dataSource = self
+        view.register(BannerCollectionViewCell.self)
         view.register(UICollectionViewCell.self)
         view.clipsToBounds = false
+        view.alwaysBounceHorizontal = true
+        view.decelerationRate = .fast
+        view.backgroundColor = .clear
+        view.showsHorizontalScrollIndicator = false
         return view
     }()
     
@@ -61,9 +66,17 @@ final class BannersTableViewCell: UITableViewCell {
     private let itemSpace: CGFloat = 20
     private var itemSize: CGSize {
         let width = collectionView.frame.size.width - (itemSpace * 2) - (overflowSpace * 2)
-        return CGSize(width: width, height: width * 0.5)
+        let height = BannersTableViewCell.getHeight(width: width)
+        return CGSize(width: width, height: height)
     }
     private var statringScrollingOffset = CGPoint.zero
+    
+    // MARK: Height
+    
+    static func getHeight(width: CGFloat) -> CGFloat {
+        let height = (width * 0.5) + BannerCollectionViewCell.labelHeight
+        return height
+    }
 }
 
 extension BannersTableViewCell: UICollectionViewDelegateFlowLayout {
@@ -91,7 +104,7 @@ extension BannersTableViewCell: UICollectionViewDelegate {
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let itemWidthWithSpace = itemSize.width + (itemSpace * 2)
-        let offset = scrollView.contentOffset.x + scrollView.contentInset.left
+        let offset = scrollView.contentOffset.x + scrollView.contentInset.left + overflowSpace
         let proposedPage = offset / max(1, itemWidthWithSpace)
         let snapPoint: CGFloat = 0.1
         let snapDelta: CGFloat = (offset > statringScrollingOffset.x) ? (1 - snapPoint) : snapPoint
@@ -102,18 +115,21 @@ extension BannersTableViewCell: UICollectionViewDelegate {
         } else {
             page = floor(proposedPage + 1)
         }
-        targetContentOffset.pointee = CGPoint(x: (itemWidthWithSpace * page) - (itemSpace * page), y: targetContentOffset.pointee.y)
+        targetContentOffset.pointee = CGPoint(x: (itemWidthWithSpace * page) - (overflowSpace * page), y: targetContentOffset.pointee.y)
     }
 }
 
 extension BannersTableViewCell: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return banners?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = UICollectionViewCell.dequeue(from: collectionView, for: indexPath)!
-        cell.backgroundColor = [UIColor.red, UIColor.blue, UIColor.green, UIColor.purple, UIColor.yellow, UIColor.orange][indexPath.row]
+        let cell = BannerCollectionViewCell.dequeue(from: collectionView, for: indexPath)!
+        if let banner = banners?[safe: indexPath.row] {
+            cell.configure(imageUrlStr: banner.image, title: banner.title, subTitle: banner.sub_title)
+        }
         return cell
     }
 }

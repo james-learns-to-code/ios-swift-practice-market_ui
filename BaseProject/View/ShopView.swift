@@ -9,14 +9,24 @@
 import UIKit
 
 final class ShopView: UIView {
-    
+     
+    // MARK: UI
     lazy var tableView: UITableView = {
-        let view = UITableView()
+        let view = UITableView(frame: .zero, style: .grouped)
+        view.separatorStyle = .none
+        view.sectionHeaderHeight = 0
+        view.sectionFooterHeight = 0
+        view.contentInset.bottom = CGFloat(ShopViewModel.bottomInset)
         view.register(UITableViewCell.self)
         view.register(BannersTableViewCell.self)
+        view.register(ProductCategoryTableViewCell.self)
+        view.register(CategoryItemsTableViewCell.self)
+        view.register(RecentTableViewCell.self)
+        view.register(NoticeTableViewCell.self)
         return view
     }()
     
+    // MARK: Lifecycle
     required init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         super.init(frame: .zero)
         setup()
