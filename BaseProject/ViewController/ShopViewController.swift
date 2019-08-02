@@ -42,7 +42,7 @@ final class ShopViewController: UIViewController {
         setupNavigationBar()
         setupBinding()
     }
-    
+ 
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.isTranslucent = false
@@ -55,13 +55,9 @@ final class ShopViewController: UIViewController {
     private func setupBinding() {
         viewModel.feed.bind() { [weak self] feed in
             DispatchQueue.main.async {
-                self?.reload()
+                self?.customView.tableView.reloadData()
             }
         }
-    }
-    
-    private func reload() {
-        customView.tableView.reloadData()
     }
 }
 
@@ -215,7 +211,5 @@ extension ShopViewController: CompanyFooterViewDelegate {
     func didTapExpandButton(_ sender: CompanyFooterView) {
         sender.updateHeight(isShrink: !sender.isShrink)
         customView.tableView.reloadData()
-//        customView.tableView.beginUpdates()
-//        customView.tableView.endUpdates()
     }
 }

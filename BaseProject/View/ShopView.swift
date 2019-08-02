@@ -45,6 +45,7 @@ final class ShopView: UIView {
     private func setup() {
         addTableView()
     }
+    
     private func addTableView() {
         addSubviewWithFullsize(tableView) 
     }

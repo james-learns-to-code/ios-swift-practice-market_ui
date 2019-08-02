@@ -51,7 +51,6 @@ final class BannersTableViewCell: UITableViewCell {
         view.delegate = self
         view.dataSource = self
         view.register(BannerCollectionViewCell.self)
-        view.register(UICollectionViewCell.self)
         view.clipsToBounds = false
         view.alwaysBounceHorizontal = true
         view.decelerationRate = .fast
@@ -127,9 +126,8 @@ extension BannersTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = BannerCollectionViewCell.dequeue(from: collectionView, for: indexPath)!
-        if let banner = banners?[safe: indexPath.row] {
-            cell.configure(imageUrlStr: banner.image, title: banner.title, subTitle: banner.sub_title)
-        }
+        let banner = banners?[safe: indexPath.row]
+        cell.configure(imageUrlStr: banner?.image, title: banner?.title, subTitle: banner?.sub_title)
         return cell
     }
 }
