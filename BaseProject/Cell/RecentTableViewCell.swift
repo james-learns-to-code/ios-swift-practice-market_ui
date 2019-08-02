@@ -97,9 +97,8 @@ extension RecentTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = RecentItemCollectionViewCell.dequeue(from: collectionView, for: indexPath)!
-        if let item = items?[safe: indexPath.row] {
-            cell.configure(imageUrlStr: item.image, title: item.title)
-        }
+        let item = items?[safe: indexPath.row]
+        cell.configure(imageUrlStr: item?.image, title: item?.title)
         return cell
     }
 }

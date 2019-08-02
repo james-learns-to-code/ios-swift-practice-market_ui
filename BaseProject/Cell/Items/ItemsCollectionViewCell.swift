@@ -37,11 +37,6 @@ final class ItemsCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        print("ItemsCollectionViewCell layoutSubviews")
-    }
-
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: ItemsCollectionViewCell.sectionSpace, bottom: 0, right: ItemsCollectionViewCell.sectionSpace)
@@ -91,9 +86,8 @@ extension ItemsCollectionViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = ItemCollectionViewCell.dequeue(from: collectionView, for: indexPath)!
-        if let item = items?[safe: indexPath.row] {
-            cell.configure(imageUrlStr: item.image, title: item.title, promotion: item.promotion, price: item.price)
-        }
+        let item = items?[safe: indexPath.row]
+        cell.configure(imageUrlStr: item?.image, title: item?.title, promotion: item?.promotion, price: item?.price)
         return cell
     }
 }

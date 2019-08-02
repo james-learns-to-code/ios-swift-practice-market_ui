@@ -63,7 +63,6 @@ final class ProductCategoryTableViewCell: UITableViewCell {
         view.delegate = self
         view.dataSource = self
         view.register(CategoryCollectionViewCell.self)
-        view.register(UICollectionViewCell.self)
         view.backgroundColor = .clear
         view.showsHorizontalScrollIndicator = false
         return view
@@ -73,8 +72,7 @@ final class ProductCategoryTableViewCell: UITableViewCell {
         willSet (newValue) {
             guard let selectedIndexPath = selectedIndexPath else { return }
             if selectedIndexPath != newValue {
-                collectionView.delegate?
-                    .collectionView?(collectionView, didDeselectItemAt: selectedIndexPath)
+                collectionView.deselectItem(at: selectedIndexPath, animated: true)
             }
         }
     }
@@ -91,7 +89,8 @@ extension ProductCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let product = products?[safe: indexPath.row]
-        return CategoryCollectionViewCell.getSize(name: product?.category_name ?? "")
+        let name = product?.category_name ?? ""
+        return CategoryCollectionViewCell.getSize(name: name)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -103,9 +102,11 @@ extension ProductCategoryTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
         delegate?.didTapCategory(self, index: indexPath.row)
-        if collectionView.isCellFullyVisible(indexPath: indexPath) == false {
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
+        focusCell(at: indexPath)
+    }
+    private func focusCell(at indexPath: IndexPath) {
+        guard collectionView.isCellFullyVisible(indexPath: indexPath) == false else { return }
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 }
 
@@ -117,9 +118,8 @@ extension ProductCategoryTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = CategoryCollectionViewCell.dequeue(from: collectionView, for: indexPath)!
-        if let product = products?[safe: indexPath.row] {
-            cell.configure(name: product.category_name)
-        }
+        let product = products?[safe: indexPath.row]
+        cell.configure(name: product?.category_name)
         return cell
     }
 }

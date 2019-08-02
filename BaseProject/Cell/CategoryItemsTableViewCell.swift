@@ -29,9 +29,14 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     }
     
     var currentIndexPath: IndexPath? {
-        return getIndexPath(from: collectionView)
+        return visibleCurrentCellIndexPath
     }
 
+    static func getHeight(width: CGFloat, items: [ItemModel]?) -> CGFloat {
+        let size = getItemSize(width: width, items: items)
+        return size.height
+    }
+    
     // MARK: Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,8 +48,8 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     
     // MARK: Setup
     private func setup() {
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
         backgroundColor = .white
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
         addSubviewWithFullsize(collectionView)
     }
     
@@ -53,7 +58,7 @@ final class CategoryItemsTableViewCell: UITableViewCell {
             collectionView.reloadData()
         }
     }
-    
+ 
     // MARK: UI
     
     override func layoutSubviews() {
@@ -70,20 +75,7 @@ final class CategoryItemsTableViewCell: UITableViewCell {
         viewHeightConstraint?.constant = height
         viewHeightConstraint?.isActive = true
     }
-
-    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        print("systemLayoutSizeFitting")
-        collectionView.layoutIfNeeded()
-        
-        let indexPath = currentIndexPath ?? IndexPath(row: 0, section: 0)
-        let items = products?[safe: indexPath.row]?.items
-        let height = CategoryItemsTableViewCell.getItemSize(width: collectionView.frame.width, items: items).height
-
-        
-        let newSize = CGSize(width: collectionView.frame.width, height: height)
-        return newSize
-    }
-
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -100,8 +92,6 @@ final class CategoryItemsTableViewCell: UITableViewCell {
         return view
     }()
 
-    private var scrollBeginIndexPath: IndexPath?
-
     private static func getItemSize(width: CGFloat, items: [ItemModel]?) -> CGSize {
         let itemSize = ItemsCollectionViewCell.getItemSize(width: width)
         let count = (items?.count ?? 0)
@@ -110,13 +100,6 @@ final class CategoryItemsTableViewCell: UITableViewCell {
         let itemsHeight = itemSize.height * CGFloat(rowNum)
         return CGSize(width: CGFloat(Int(width)), height: CGFloat(Int(itemsHeight)))
     }
-    
-    // MARK: Height
-    
-    static func getHeight(width: CGFloat, items: [ItemModel]?) -> CGFloat {
-        let size = getItemSize(width: width, items: items)
-        return size.height
-    }
 }
 
 extension CategoryItemsTableViewCell: UICollectionViewDelegateFlowLayout {
@@ -124,7 +107,6 @@ extension CategoryItemsTableViewCell: UICollectionViewDelegateFlowLayout {
         let width = collectionView.frame.width
         let items = products?[safe: indexPath.row]?.items
         let size = CategoryItemsTableViewCell.getItemSize(width: width, items: items)
-        print("sizeForItemAt \(size)")
         return size
     }
 }
@@ -134,16 +116,7 @@ extension CategoryItemsTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("didSelectItemAt")
     }
-    
-    private func getIndexPath(from collectionView: UICollectionView) -> IndexPath? {
-        let row = Int(collectionView.contentOffset.x / collectionView.bounds.width)
-        return IndexPath(row: row, section: 0)
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        scrollBeginIndexPath = getIndexPath(from: collectionView)
-    }
-    
+     
     private var visibleCurrentCellIndexPath: IndexPath? {
         for cell in self.collectionView.visibleCells {
             let indexPath = self.collectionView.indexPath(for: cell)
