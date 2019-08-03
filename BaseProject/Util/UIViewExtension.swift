@@ -13,10 +13,10 @@ extension UIView {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            subview.heightAnchor.constraint(equalTo: heightAnchor),
-            subview.widthAnchor.constraint(equalTo: widthAnchor),
-            subview.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subview.centerYAnchor.constraint(equalTo: centerYAnchor),
+            subview.topAnchor.constraint(equalTo: topAnchor),
+            subview.bottomAnchor.constraint(equalTo: bottomAnchor),
+            subview.leftAnchor.constraint(equalTo: leftAnchor),
+            subview.rightAnchor.constraint(equalTo: rightAnchor)
             ])
     }
 }

@@ -9,23 +9,25 @@
 import UIKit
 
 final class ShopViewController: UIViewController {
-    private let viewModel = ShopViewModel()
-    
-    typealias Section = ShopViewModel.Section
+    typealias ViewModel = ShopViewModel
+    typealias Section = ViewModel.Section
+    private let viewModel = ViewModel()
+
     private weak var categoryCell: ProductCategoryTableViewCell?
     private weak var itemCell: CategoryItemsTableViewCell?
+
+    // MARK: UI
+    private lazy var footerView: CompanyFooterView = {
+        let view = CompanyFooterView()
+        view.updateHeight(isShrink: true)
+        view.delegate = self
+        return view
+    }()
     
     // MARK: View switching
     
     private lazy var customView: ShopView = {
         let view = ShopView(delegate: self, dataSource: self)
-        return view
-    }()
-    
-    private lazy var footerView: CompanyFooterView = {
-        let view = CompanyFooterView()
-        view.updateHeight(isShrink: true)
-        view.delegate = self
         return view
     }()
     
@@ -74,8 +76,8 @@ extension ShopViewController: UITableViewDelegate {
             case Section.ProductRow.category.rawValue:
                 return ProductCategoryTableViewCell.getHeight()
             case Section.ProductRow.item.rawValue:
-                let currentIndexPath = categoryCell?.selectedIndexPath ?? IndexPath(row: 0, section: 0)
-                let items = viewModel.products?[safe: currentIndexPath.row]?.items
+                let curIndex = itemCell?.currentIndexPath ?? IndexPath(row: 0, section: 0)
+                let items = viewModel.products?[safe: curIndex.row]?.items
                 return CategoryItemsTableViewCell.getHeight(width: tableView.frame.width, items: items)
             default:
                 break
@@ -101,45 +103,27 @@ extension ShopViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case Section.product.rawValue:
-            return CGFloat(ShopViewModel.productSectionHeight)
-        case Section.recent.rawValue:
-            return CGFloat(ShopViewModel.recentSectionHeight)
-        case Section.notice.rawValue:
-            return CGFloat(ShopViewModel.noticeSectionHeight)
-        default:
-            return 0
-        }
+        return CGFloat(viewModel.heightForHeaderInSection(section))
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        switch section {
-        case Section.banner.rawValue:
-            return CGFloat(ShopViewModel.bannerFooterHeight)
-        case Section.product.rawValue:
-            return CGFloat(ShopViewModel.productFooterHeight)
-        case Section.recent.rawValue:
-            return CGFloat(ShopViewModel.recentFooterHeight)
-        case Section.notice.rawValue:
+        if section == Section.notice.rawValue {
             return footerView.frame.height
-        default:
-            return 0
         }
+        return CGFloat(viewModel.heightForFooterInSection(section))
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        func createLabel(with text: String) -> UILabel {
+            let label = UILabel(color: .white)
+            label.text = "     \(text)"
+            return label
+        }
         switch section {
         case Section.product.rawValue:
-            let label = UILabel(color: .white)
-            label.text = "     \(ShopViewModel.productSectionTitle)"
-            return label
+            return createLabel(with: ViewModel.productSectionTitle)
         case Section.recent.rawValue:
-            let label = UILabel(color: .white)
-            label.text = "     \(ShopViewModel.recentSectionTitle)"
-            return label
+            return createLabel(with: ViewModel.recentSectionTitle)
         case Section.notice.rawValue:
-            let label = UILabel(color: .white)
-            label.text = "     \(ShopViewModel.noticeSectionTitle)"
-            return label
+            return createLabel(with: ViewModel.noticeSectionTitle)
         default:
             return nil
         }
@@ -194,16 +178,20 @@ extension ShopViewController: UITableViewDataSource {
 extension ShopViewController: ProductCategoryTableViewCellDelegate {
     func didTapCategory(_ sender: ProductCategoryTableViewCell, index: Int) {
         itemCell?.select(at: index)
-        customView.tableView.beginUpdates()
-        customView.tableView.endUpdates()
+        UIView.animate(withDuration: 0) {
+            self.customView.tableView.beginUpdates()
+            self.customView.tableView.endUpdates()
+        }
     }
 }
 
 extension ShopViewController: CategoryItemsTableViewCellDelegate {
     func didScroll(_ sender: CategoryItemsTableViewCell, to index: Int) {
         categoryCell?.select(at: index)
-        customView.tableView.beginUpdates()
-        customView.tableView.endUpdates()
+        UIView.animate(withDuration: 0) {
+            self.customView.tableView.beginUpdates()
+            self.customView.tableView.endUpdates()
+        }
     }
 }
 

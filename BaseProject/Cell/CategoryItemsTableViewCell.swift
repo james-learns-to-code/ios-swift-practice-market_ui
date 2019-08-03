@@ -13,6 +13,8 @@ protocol CategoryItemsTableViewCellDelegate: class {
 }
 
 final class CategoryItemsTableViewCell: UITableViewCell {
+    typealias SelfClass = CategoryItemsTableViewCell
+    
     weak var delegate: CategoryItemsTableViewCellDelegate?
     
     // MARK: Interface
@@ -22,15 +24,10 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     }
     
     func select(at index: Int) {
-        collectionView.scrollToItem(
-            at: IndexPath(row: index, section: 0),
-            at: .left,
-            animated: false)
+        scrollToIndex(index, animated: false)
     }
     
-    var currentIndexPath: IndexPath? {
-        return visibleCurrentCellIndexPath
-    }
+    var currentIndexPath = IndexPath(row: 0, section: 0)
 
     static func getHeight(width: CGFloat, items: [ItemModel]?) -> CGFloat {
         let size = getItemSize(width: width, items: items)
@@ -49,10 +46,11 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     // MARK: Setup
     private func setup() {
         backgroundColor = .white
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
-        addSubviewWithFullsize(collectionView)
+        viewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        contentView.addSubviewWithFullsize(collectionView)
     }
     
+    // MARK: Data
     private var products: [ProductModel]? {
         didSet {
             collectionView.reloadData()
@@ -69,9 +67,8 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     
     private var viewHeightConstraint: NSLayoutConstraint?
     private func updateViewHeight() {
-        let indexPath = currentIndexPath ?? IndexPath(row: 0, section: 0)
-        let items = products?[safe: indexPath.row]?.items
-        let height = CategoryItemsTableViewCell.getItemSize(width: collectionView.frame.width, items: items).height
+        let items = products?[safe: currentIndexPath.row]?.items
+        let height = SelfClass.getItemSize(width: collectionView.frame.width, items: items).height
         viewHeightConstraint?.constant = height
         viewHeightConstraint?.isActive = true
     }
@@ -95,7 +92,7 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     private static func getItemSize(width: CGFloat, items: [ItemModel]?) -> CGSize {
         let itemSize = ItemsCollectionViewCell.getItemSize(width: width)
         let count = (items?.count ?? 0)
-        let maxCount = count > ShopViewModel.numOfMaxItem ? ShopViewModel.numOfMaxItem : count
+        let maxCount = ShopViewModel.getCount(count, max: ShopViewModel.numOfMaxItem)
         let rowNum = Int(ceil(Double(maxCount) / Double(ItemsCollectionViewCell.numOfRow)))
         let itemsHeight = itemSize.height * CGFloat(rowNum)
         return CGSize(width: CGFloat(Int(width)), height: CGFloat(Int(itemsHeight)))
@@ -104,10 +101,7 @@ final class CategoryItemsTableViewCell: UITableViewCell {
 
 extension CategoryItemsTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width
-        let items = products?[safe: indexPath.row]?.items
-        let size = CategoryItemsTableViewCell.getItemSize(width: width, items: items)
-        return size
+        return collectionView.frame.size
     }
 }
 
@@ -116,19 +110,20 @@ extension CategoryItemsTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("didSelectItemAt")
     }
-     
-    private var visibleCurrentCellIndexPath: IndexPath? {
-        for cell in self.collectionView.visibleCells {
-            let indexPath = self.collectionView.indexPath(for: cell)
-            return indexPath
-        }
-        return nil
+    
+    private func scrollToIndex(_ index: Int, animated: Bool = true) {
+        let newOffset = collectionView.frame.width * CGFloat(index)
+        collectionView.setContentOffset(CGPoint(x: newOffset, y: 0), animated: animated)
+        currentIndexPath = getCurrentIndexPathFrom(collectionView)
     }
-
+ 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let newIndexPath = visibleCurrentCellIndexPath else { return }
-        delegate?.didScroll(self, to: newIndexPath.row)
-        setNeedsLayout()
+        currentIndexPath = getCurrentIndexPathFrom(collectionView)
+        delegate?.didScroll(self, to: currentIndexPath.row)
+    }
+    private func getCurrentIndexPathFrom(_ collectionView: UICollectionView) -> IndexPath {
+        let newPage = Int(floor(collectionView.contentOffset.x / max(1, collectionView.frame.width)))
+        return IndexPath(row: newPage, section: 0)
     }
 }
 

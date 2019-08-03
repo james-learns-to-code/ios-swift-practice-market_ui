@@ -19,7 +19,6 @@ final class ProductCategoryTableViewCell: UITableViewCell {
     
     func configure(products: [ProductModel]?) {
         self.products = products
-        
         let indexPath = selectedIndexPath ?? IndexPath(row: 0, section: 0)
         select(at: indexPath.row)
     }
@@ -30,6 +29,10 @@ final class ProductCategoryTableViewCell: UITableViewCell {
             at: IndexPath(row: index, section: 0),
             animated: true,
             scrollPosition: .centeredHorizontally)
+    }
+    
+    static func getHeight() -> CGFloat {
+        return CategoryCollectionViewCell.getSize(name: "Test").height
     }
     
     // MARK: Lifecycle
@@ -68,7 +71,7 @@ final class ProductCategoryTableViewCell: UITableViewCell {
         return view
     }()
     
-    var selectedIndexPath: IndexPath? {
+    private var selectedIndexPath: IndexPath? {
         willSet (newValue) {
             guard let selectedIndexPath = selectedIndexPath else { return }
             if selectedIndexPath != newValue {
@@ -79,10 +82,6 @@ final class ProductCategoryTableViewCell: UITableViewCell {
 
     private let overflowSpace: CGFloat = 20
     private let itemSpace: CGFloat = 5
-    
-    static func getHeight() -> CGFloat {
-        return CategoryCollectionViewCell.getSize(name: "Test").height
-    }
 }
 
 extension ProductCategoryTableViewCell: UICollectionViewDelegateFlowLayout {

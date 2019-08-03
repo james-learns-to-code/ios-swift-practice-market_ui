@@ -13,6 +13,7 @@ protocol CompanyFooterViewDelegate: class {
 }
 
 final class CompanyFooterView: UIView {
+    typealias SelfClass = CompanyFooterView
     weak var delegate: CompanyFooterViewDelegate?
     
     static let shrinkHeight: CGFloat = 100
@@ -21,13 +22,13 @@ final class CompanyFooterView: UIView {
     // MARK: Interface
     
     var isShrink: Bool {
-        return (frame.size.height == CompanyFooterView.height)
+        return (frame.size.height == SelfClass.height)
             ? false : true
     }
     
     func updateHeight(isShrink: Bool) {
         let width = frame.width
-        let height = isShrink ? CompanyFooterView.shrinkHeight : CompanyFooterView.height
+        let height = isShrink ? SelfClass.shrinkHeight : SelfClass.height
         frame.size = CGSize(width: width, height: height)
         descriptionLabel.numberOfLines = isShrink ? 2 : 0
         setNeedsLayout()
@@ -81,7 +82,7 @@ final class CompanyFooterView: UIView {
             expandButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
             expandButton.rightAnchor.constraint(equalTo: rightAnchor),
             expandButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            expandButton.heightAnchor.constraint(equalToConstant: CompanyFooterView.shrinkHeight)
+            expandButton.heightAnchor.constraint(equalToConstant: SelfClass.shrinkHeight)
             ])
         
         linkButton.setTitle("홈페이지", for: .normal)

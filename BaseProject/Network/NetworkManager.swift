@@ -8,17 +8,19 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case url
-    case response(error: Error?)
-    case data
-    case jsonDecoding(error: Error?)
-    
-    static let domain = "app.network"
-}
+typealias NetworkError = NetworkManager.CustomError
 
 class NetworkManager {
     
+    enum CustomError: Error {
+        case url
+        case response(error: Error?)
+        case data
+        case jsonDecoding(error: Error?)
+        
+        static let domain = "app.network"
+    }
+
     static let header: [String: String] = [
         "Content-Type": "application/json"
     ]

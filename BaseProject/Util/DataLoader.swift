@@ -11,19 +11,24 @@ import UIKit
 final class DataLoader {
     static var shared = DataLoader()
     
-    private var loadDict = [Int: Any]()
+    typealias LoadDictType = [Int: Any]
+    private var loadDict = LoadDictType()
+    
+    let dictCount = 100
     
     func loaderForImageView(_ imageView: UIImageView) -> UIImageViewLoader {
         let hash = imageView.hashValue
         if let loader = loadDict[hash] {
             return loader as! UIImageViewLoader
         }
+        removeFirstIn(&loadDict, ifExceed: dictCount)
         let loader = UIImageViewLoader(imageView: imageView)
-        if loadDict.count > 100 {
-            loadDict.remove(at: loadDict.startIndex)
-        }
         loadDict[hash] = loader
         return loader
+    }
+    private func removeFirstIn(_ dict: inout LoadDictType, ifExceed count: Int) {
+        guard dict.count > count else { return }
+        dict.remove(at: dict.startIndex)
     }
 }
 
@@ -38,7 +43,7 @@ final class UIImageViewLoader {
     private var task: URLSessionTask?
     
     func setImageWithUrlString(_ urlString: String?) {
-        guard let urlString = urlString, let url = URL(string: urlString) else { return }
+        guard let url = URL(string: urlString ?? "") else { return }
         guard isAlreadyRequesting(url: url) == false else { return }
         task?.cancel()
         let request = URLRequest(url: url)
@@ -60,6 +65,7 @@ final class UIImageViewLoader {
     }
     
     private func isAlreadyRequesting(url: URL) -> Bool {
-        return (task?.currentRequest?.url == url)
+        let curUrl = task?.currentRequest?.url
+        return curUrl == url
     }
 }

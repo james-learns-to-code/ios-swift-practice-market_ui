@@ -11,6 +11,7 @@ import UIKit
 final class RecentItemCollectionViewCell: UICollectionViewCell {
     static let size = CGSize(width: 130, height: 250)
     
+    // MARK: Interface
     func configure(imageUrlStr: String?, title: String?) {
         imageView.loader.setImageWithUrlString(imageUrlStr)
         titleLabel.text = title
@@ -32,6 +33,7 @@ final class RecentItemCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    // MARK: Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -40,6 +42,7 @@ final class RecentItemCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Setup
     private func setup() {
         contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false

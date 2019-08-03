@@ -9,15 +9,27 @@
 import UIKit
 
 final class BannerCollectionViewCell: UICollectionViewCell {
-   
-    static let labelHeight: CGFloat = 60
+    typealias SelfClass = BannerCollectionViewCell
     
+    static let topMargin: CGFloat = 10
+    static let imageBottomMargin: CGFloat = 10
+    static let labelHeight: CGFloat = 60
+
     // MARK: Interface
+    
     func configure(imageUrlStr: String?, title: String?, subTitle: String?) {
         imageView.loader.setImageWithUrlString(imageUrlStr)
         titleLabel.text = title
         subTitleLabel.text = subTitle
     }
+    
+    static func getHeight(width: CGFloat) -> CGFloat {
+        let imageHeight = width * 0.5
+        let height = topMargin + imageHeight + labelHeight
+        return height
+    }
+
+    // MARK: UI
     
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -54,8 +66,8 @@ final class BannerCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -BannerCollectionViewCell.labelHeight)
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SelfClass.topMargin),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -SelfClass.labelHeight)
             ])
 
         contentView.addSubview(titleLabel)
@@ -63,7 +75,7 @@ final class BannerCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20)
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: SelfClass.imageBottomMargin)
             ])
 
         contentView.addSubview(subTitleLabel)
@@ -71,7 +83,7 @@ final class BannerCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             subTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             subTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0)
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor)
             ])
     }
 }
