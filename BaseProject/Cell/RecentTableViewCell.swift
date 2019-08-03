@@ -12,7 +12,6 @@ final class RecentTableViewCell: UITableViewCell {
     static let height: CGFloat = RecentItemCollectionViewCell.size.height
     
     // MARK: Interface
-    
     func configure(items: [ItemModel]?) {
         self.items = items
     }
@@ -32,6 +31,7 @@ final class RecentTableViewCell: UITableViewCell {
         contentView.addSubviewWithFullsize(collectionView)
     }
     
+    // MARK: Data
     private var items: [ItemModel]? {
         didSet {
             collectionView.reloadData()
@@ -39,6 +39,7 @@ final class RecentTableViewCell: UITableViewCell {
     }
     
     // MARK: UI
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -54,22 +55,8 @@ final class RecentTableViewCell: UITableViewCell {
         return view
     }()
     
-    var selectedIndexPath: IndexPath? {
-        willSet (newValue) {
-            guard let selectedIndexPath = selectedIndexPath else { return }
-            if selectedIndexPath != newValue {
-                collectionView.delegate?
-                    .collectionView?(collectionView, didDeselectItemAt: selectedIndexPath)
-            }
-        }
-    }
-    
     private let overflowSpace: CGFloat = 20
     private let itemSpace: CGFloat = 5
-    
-    static func getHeight() -> CGFloat {
-        return CategoryCollectionViewCell.getSize(name: "Test").height
-    }
 }
 
 extension RecentTableViewCell: UICollectionViewDelegateFlowLayout {

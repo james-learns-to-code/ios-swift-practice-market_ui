@@ -8,10 +8,6 @@
 
 import UIKit
 
-struct BannersTableViewCellModel {
-    static let peekSize: Float = 10
-}
-
 final class BannersTableViewCell: UITableViewCell {
     
     // MARK: Interface
@@ -31,7 +27,7 @@ final class BannersTableViewCell: UITableViewCell {
     // MARK: Setup
     private func setup() {
         backgroundColor = .white
-        addSubviewWithFullsize(collectionView)
+        contentView.addSubviewWithFullsize(collectionView)
     }
     
     private var banners: [BannerModel]? {
@@ -64,16 +60,17 @@ final class BannersTableViewCell: UITableViewCell {
     private let overflowSpace: CGFloat = 20
     private let itemSpace: CGFloat = 20
     private var itemSize: CGSize {
-        let width = collectionView.frame.size.width - (itemSpace * 2) - (overflowSpace * 2)
+        let totalMargin = (itemSpace + overflowSpace) * 2
+        let width = collectionView.frame.size.width - totalMargin
         let height = BannersTableViewCell.getHeight(width: width)
         return CGSize(width: width, height: height)
     }
-    private var statringScrollingOffset = CGPoint.zero
+    private var scrollBeginOffset: CGPoint = .zero
     
     // MARK: Height
     
     static func getHeight(width: CGFloat) -> CGFloat {
-        let height = (width * 0.5) + BannerCollectionViewCell.labelHeight
+        let height = BannerCollectionViewCell.getHeight(width: width)
         return height
     }
 }
@@ -98,23 +95,24 @@ extension BannersTableViewCell: UICollectionViewDelegate {
     // MARK: Peek scrolling
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        statringScrollingOffset = scrollView.contentOffset
+        scrollBeginOffset = scrollView.contentOffset
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let itemWidthWithSpace = itemSize.width + (itemSpace * 2)
-        let offset = scrollView.contentOffset.x + scrollView.contentInset.left + overflowSpace
-        let proposedPage = offset / max(1, itemWidthWithSpace)
-        let snapPoint: CGFloat = 0.1
-        let snapDelta: CGFloat = (offset > statringScrollingOffset.x) ? (1 - snapPoint) : snapPoint
+    func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        let page: CGFloat
-        if floor(proposedPage + snapDelta) == floor(proposedPage) {
-            page = floor(proposedPage)
-        } else {
-            page = floor(proposedPage + 1)
-        }
-        targetContentOffset.pointee = CGPoint(x: (itemWidthWithSpace * page) - (overflowSpace * page), y: targetContentOffset.pointee.y)
+        let pageWidth = itemSize.width + itemSpace
+        // Scroll if user scrolling only 10% of page width
+        let snapTolerance: CGFloat = 0.1
+        let snapDelta: CGFloat = (scrollView.contentOffset.x > scrollBeginOffset.x) ?
+            1 - snapTolerance : snapTolerance
+        let widthForSnapping = pageWidth * snapDelta
+        let snappedOffest = scrollView.contentOffset.x + widthForSnapping
+        let pageIndex = floor(snappedOffest / pageWidth)
+        let pageOffset = pageWidth * pageIndex
+        targetContentOffset.pointee = CGPoint(x: pageOffset, y: targetContentOffset.pointee.y)
     }
 }
 

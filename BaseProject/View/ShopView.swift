@@ -16,6 +16,7 @@ final class ShopView: UIView {
         view.separatorStyle = .none
         view.sectionHeaderHeight = 0
         view.sectionFooterHeight = 0
+        view.contentInset.top = -44
         view.contentInset.bottom = CGFloat(ShopViewModel.bottomInset)
         view.register(UITableViewCell.self)
         view.register(BannersTableViewCell.self)
@@ -41,12 +42,17 @@ final class ShopView: UIView {
     }
     
     // MARK: Setup
-    
     private func setup() {
         addTableView()
     }
-    
     private func addTableView() {
-        addSubviewWithFullsize(tableView) 
+        addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leftAnchor.constraint(equalTo: leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: rightAnchor)
+            ])
     }
 }

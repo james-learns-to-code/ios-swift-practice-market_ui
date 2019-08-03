@@ -22,18 +22,15 @@ final class ShopViewModel {
         }
     }
     
-    static let bannerFooterHeight = 10
-    static let productSectionHeight = 60
     static let productSectionTitle = "Product"
-    static let productFooterHeight = 10
-    static let recentSectionHeight = 60
     static let recentSectionTitle = "Recently Viewed"
-    static let recentFooterHeight = 10
-    static let noticeSectionHeight = 60
     static let noticeSectionTitle = "Notice"
     static let numOfMaxItem = 6
     static let bottomInset = 100
-    
+    static func getCount(_ count: Int, max: Int) -> Int {
+        return count > max ? max : count
+    }
+
     // MARK: Data
     
     var feed = Binding<ShopResponseModel>()
@@ -71,9 +68,29 @@ final class ShopViewModel {
         }
     }
     
+    func heightForHeaderInSection(_ section: Int) -> Float {
+        switch section {
+        case Section.product.rawValue: return 60
+        case Section.recent.rawValue: return 60
+        case Section.notice.rawValue: return 60
+        default:
+            return 0
+        }
+    }
+    
+    func heightForFooterInSection(_ section: Int) -> Float {
+        switch section {
+        case Section.banner.rawValue: return 10
+        case Section.product.rawValue: return 10
+        case Section.recent.rawValue: return 10
+        default:
+            return 0
+        }
+    }
+ 
     // MARK: API
     func fetchFeed() {
-        ShopNetworkManager.shared.requestFeed { [weak self] result in
+        API.shared.requestFeed { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let value):

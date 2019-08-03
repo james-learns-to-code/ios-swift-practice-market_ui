@@ -11,7 +11,6 @@ import UIKit
 final class ItemsCollectionViewCell: UICollectionViewCell {
     
     // MARK: Interface
-    
     func configure(items: [ItemModel]?) {
         self.items = items
     }
@@ -80,7 +79,7 @@ extension ItemsCollectionViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = items?.count ?? 0
-        let maxCount = count > ShopViewModel.numOfMaxItem ? ShopViewModel.numOfMaxItem : count
+        let maxCount = ShopViewModel.getCount(count, max: ShopViewModel.numOfMaxItem)
         return maxCount
     }
     

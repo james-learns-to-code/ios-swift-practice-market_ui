@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias API = ShopNetworkManager
+
 final class ShopNetworkManager: NetworkManager {
     static let shared = ShopNetworkManager()
     
@@ -20,19 +22,20 @@ final class ShopNetworkManager: NetworkManager {
 extension ShopNetworkManager {
     typealias ShopResultHandler = (Result<ShopResponseModel, NetworkError>) -> Void
 
-    func requestFeed(
-        handler: @escaping ShopResultHandler) {
-        
+    private var shopRequestExpectedResponse: String {
         let expectedResponse = DataBuilder.build()
-
         let encoder = JSONEncoder()
         let data = try! encoder.encode(expectedResponse)
-        let body = String(bytes: data, encoding: .utf8)!
-
+        let str = String(bytes: data, encoding: .utf8)!
+        return str
+    }
+    
+    func requestFeed(
+        handler: @escaping ShopResultHandler) {
         request(
             with: ShopNetworkManager.URL.base,
             type: .post,
-            body: body) { result in
+            body: shopRequestExpectedResponse) { result in
                 ResponseType<ShopResponseModel>
                     .decodeResult(result, handler: handler)
         }

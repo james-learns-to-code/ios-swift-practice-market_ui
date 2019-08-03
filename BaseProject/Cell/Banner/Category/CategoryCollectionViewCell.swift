@@ -9,6 +9,7 @@
 import UIKit
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
+    typealias SelfClass = CategoryCollectionViewCell
     
     // MARK: Interface
     
@@ -31,8 +32,8 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
             attributes: fontAttr,
             context: nil).size ?? .zero
         return CGSize(
-            width: CGFloat(Int(labelSize.width + CategoryCollectionViewCell.marginSize.width)),
-            height: CGFloat(Int(labelSize.height + CategoryCollectionViewCell.marginSize.height)))
+            width: CGFloat(Int(labelSize.width + SelfClass.marginSize.width)),
+            height: CGFloat(Int(labelSize.height + SelfClass.marginSize.height)))
     }
     
     // MARK: UI
@@ -40,7 +41,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     private static let nameLabelFont = UIFont.preferredFont(forTextStyle: .caption2)
     private lazy var nameLabel: UILabel = {
         let view = UILabel()
-        view.font = CategoryCollectionViewCell.nameLabelFont
+        view.font = SelfClass.nameLabelFont
         view.textColor = .gray
         view.textAlignment = .center
         return view

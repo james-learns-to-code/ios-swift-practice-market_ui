@@ -47,6 +47,8 @@ final class NoticeTableViewCell: UITableViewCell {
             ])
     }
 
+    // MARK: UI
+    
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.preferredFont(forTextStyle: .caption1)
