@@ -13,11 +13,11 @@ final class ItemCollectionViewCell: UICollectionViewCell {
     static let labelHeight: CGFloat = 80
 
     // MARK: Interface
-    func configure(imageUrlStr: String?, title: String?, promotion: String?, price: Double) {
+    func configure(imageUrlStr: String?, title: String?, promotion: String?, price: Double?) {
         imageView.loader.setImageWithUrlString(imageUrlStr)
         promotionLabel.text = promotion
         titleLabel.text = title
-        priceLabel.text = String(format: "$%.02f", price)
+        priceLabel.text = String(format: "$%.02f", price ?? 0)
     }
     
     // MARK: UI
