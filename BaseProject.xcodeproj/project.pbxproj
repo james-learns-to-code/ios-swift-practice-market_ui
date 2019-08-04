@@ -35,6 +35,7 @@
 		1CC76F2C22B3D43D00D39971 /* ShopNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC76F2B22B3D43D00D39971 /* ShopNetworkManager.swift */; };
 		1CC76F2E22B3D50200D39971 /* ShopResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC76F2D22B3D50200D39971 /* ShopResponseModel.swift */; };
 		1CDC364822F692970090B8DD /* UIEdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */; };
+		1CDC364A22F6B4B70090B8DD /* ComparableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC364922F6B4B70090B8DD /* ComparableExtension.swift */; };
 		77E51B4336D2E2AB14E53FA7 /* Pods_BaseProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C72B98D968C2E5264CC41B6 /* Pods_BaseProject.framework */; };
 		9437FB3B22B40AFD00CE74C5 /* NetworkResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3A22B40AFD00CE74C5 /* NetworkResponseTests.swift */; };
 		9437FB3F22B4175D00CE74C5 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3E22B4175D00CE74C5 /* Binding.swift */; };
@@ -99,6 +100,7 @@
 		1CC76F2B22B3D43D00D39971 /* ShopNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopNetworkManager.swift; sourceTree = "<group>"; };
 		1CC76F2D22B3D50200D39971 /* ShopResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopResponseModel.swift; sourceTree = "<group>"; };
 		1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsetsExtension.swift; sourceTree = "<group>"; };
+		1CDC364922F6B4B70090B8DD /* ComparableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparableExtension.swift; sourceTree = "<group>"; };
 		23C1E9C36FF6A75FAA492A1F /* Pods-BaseProjectUITests.analyze.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectUITests.analyze.xcconfig"; path = "Target Support Files/Pods-BaseProjectUITests/Pods-BaseProjectUITests.analyze.xcconfig"; sourceTree = "<group>"; };
 		3C983293F9A6E001BF2800C7 /* Pods-BaseProjectTests.analyze.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectTests.analyze.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProjectTests/Pods-BaseProjectTests.analyze.xcconfig"; sourceTree = "<group>"; };
 		3F3709EBF08AF81A3E0A3C76 /* Pods-BaseProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BaseProjectTests/Pods-BaseProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				1C48757922F3285500E8485B /* UIImageView+DataLoaderExtension.swift */,
 				1C48757B22F3C81800E8485B /* DataLoader.swift */,
 				1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */,
+				1CDC364922F6B4B70090B8DD /* ComparableExtension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				1C48757522F29F2F00E8485B /* UIViewExtension.swift in Sources */,
 				1C48758E22F4668100E8485B /* RecentItemCollectionViewCell.swift in Sources */,
 				9437FB4422B422AF00CE74C5 /* NetworkManager.swift in Sources */,
+				1CDC364A22F6B4B70090B8DD /* ComparableExtension.swift in Sources */,
 				1C48759022F468FE00E8485B /* NoticeTableViewCell.swift in Sources */,
 				1CC76F2722B3D3AF00D39971 /* ShopViewController.swift in Sources */,
 				1C48757322F2895B00E8485B /* UICollectionViewExtension.swift in Sources */,
