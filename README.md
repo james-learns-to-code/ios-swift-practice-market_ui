@@ -47,8 +47,8 @@ If i want to peek previous/forward page in pagination UICollectionView, have to 
     }
 ```
 
-When drag is begin, store current offset.
-When drag is ended, calculate paginated offset and change targetContentOffset.pointee which is inout value.
+When drag is begin, store current offset.  
+When drag is ended, calculate paginated offset and change targetContentOffset.pointee which is inout value.  
 For supporting snapping, add snap size when calculating page offset.
 
 ## Nested CollectionView
