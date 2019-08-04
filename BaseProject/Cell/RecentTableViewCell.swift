@@ -41,32 +41,23 @@ final class RecentTableViewCell: UITableViewCell {
     // MARK: UI
     
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = itemSpace
-        layout.sectionInset = UIEdgeInsets(top: 0, left: overflowSpace, bottom: 0, right: overflowSpace)
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(
+            horizontalWithMinimumInteritemSpacing: 0,
+            minimumLineSpacing: lineSpace,
+            sectionInset: UIEdgeInsets(side: overflowSpace))
         view.delegate = self
         view.dataSource = self
-        view.register(RecentItemCollectionViewCell.self)
-        view.register(UICollectionViewCell.self)
-        view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = false
+        view.register(RecentItemCollectionViewCell.self) 
         return view
     }()
     
     private let overflowSpace: CGFloat = 20
-    private let itemSpace: CGFloat = 5
+    private let lineSpace: CGFloat = 5
 }
 
 extension RecentTableViewCell: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return RecentItemCollectionViewCell.size
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return itemSpace
     }
 }
 

@@ -46,7 +46,6 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     // MARK: Setup
     private func setup() {
         backgroundColor = .white
-        viewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
         contentView.addSubviewWithFullsize(collectionView)
     }
     
@@ -61,31 +60,17 @@ final class CategoryItemsTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateViewHeight()
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    private var viewHeightConstraint: NSLayoutConstraint?
-    private func updateViewHeight() {
-        let items = products?[safe: currentIndexPath.row]?.items
-        let height = SelfClass.getItemSize(width: collectionView.frame.width, items: items).height
-        viewHeightConstraint?.constant = height
-        viewHeightConstraint?.isActive = true
-    }
-    
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = .zero
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(
+            horizontalWithMinimumInteritemSpacing: 0,
+            sectionInset: .zero) 
         view.delegate = self
         view.dataSource = self
         view.register(ItemsCollectionViewCell.self)
         view.isPagingEnabled = true
-        view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = false
         return view
     }()
 

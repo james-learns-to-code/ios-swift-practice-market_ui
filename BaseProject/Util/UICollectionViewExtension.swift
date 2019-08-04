@@ -30,3 +30,32 @@ extension UICollectionView {
         return frame.contains(relativeRect)
     }
 }
+
+extension UICollectionView {
+    
+    convenience init(horizontalWithMinimumInteritemSpacing: CGFloat, minimumLineSpacing: CGFloat = 0, sectionInset: UIEdgeInsets = .zero) {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = horizontalWithMinimumInteritemSpacing
+        layout.minimumLineSpacing = minimumLineSpacing
+        layout.sectionInset = sectionInset
+        self.init(frame: .zero, collectionViewLayout: layout)
+        clipsToBounds = false
+        alwaysBounceHorizontal = true
+        decelerationRate = .fast
+        backgroundColor = .clear
+        showsHorizontalScrollIndicator = false
+    }
+    
+    convenience init(fixedMinimumInteritemSpacing: CGFloat, minimumLineSpacing: CGFloat = 0, sectionInset: UIEdgeInsets = .zero) {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = fixedMinimumInteritemSpacing
+        layout.minimumLineSpacing = minimumLineSpacing
+        layout.sectionInset = sectionInset
+        self.init(frame: .zero, collectionViewLayout: layout)
+        isScrollEnabled = false
+        clipsToBounds = false
+        decelerationRate = .fast
+        backgroundColor = .clear
+    }
+}

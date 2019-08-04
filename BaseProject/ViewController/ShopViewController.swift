@@ -13,21 +13,15 @@ final class ShopViewController: UIViewController {
     typealias Section = ViewModel.Section
     private let viewModel = ViewModel()
 
-    private weak var categoryCell: ProductCategoryTableViewCell?
-    private weak var itemCell: CategoryItemsTableViewCell?
+    private lazy var categoryCell = customView.categoryCell
+    private lazy var tableView = customView.tableView
+    private lazy var itemCell = customView.itemCell
+    private lazy var footerView = customView.footerView
 
-    // MARK: UI
-    private lazy var footerView: CompanyFooterView = {
-        let view = CompanyFooterView()
-        view.updateHeight(isShrink: true)
-        view.delegate = self
-        return view
-    }()
-    
     // MARK: View switching
     
     private lazy var customView: ShopView = {
-        let view = ShopView(delegate: self, dataSource: self)
+        let view = ShopView()
         return view
     }()
     
@@ -42,22 +36,25 @@ final class ShopViewController: UIViewController {
     
     private func setup() {
         setupNavigationBar()
+        tableView.delegate = self
+        tableView.dataSource = self
         setupBinding()
     }
  
     private func setupNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController?.navigationBar.prefersLargeTitles = true
+        let navBar = navigationController?.navigationBar
+        navBar?.barTintColor = .white
+        navBar?.isTranslucent = false
+        navBar?.setValue(true, forKey: "hidesShadow")
+        navBar?.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         title = "BTS"
     }
     
     private func setupBinding() {
-        viewModel.feed.bind() { [weak self] feed in
+        viewModel.feed.bind { [weak self] feed in
             DispatchQueue.main.async {
-                self?.customView.tableView.reloadData()
+                self?.tableView.reloadData()
             }
         }
     }
@@ -76,7 +73,7 @@ extension ShopViewController: UITableViewDelegate {
             case Section.ProductRow.category.rawValue:
                 return ProductCategoryTableViewCell.getHeight()
             case Section.ProductRow.item.rawValue:
-                let curIndex = itemCell?.currentIndexPath ?? IndexPath(row: 0, section: 0)
+                let curIndex = itemCell.currentIndexPath
                 let items = viewModel.products?[safe: curIndex.row]?.items
                 return CategoryItemsTableViewCell.getHeight(width: tableView.frame.width, items: items)
             default:
@@ -131,6 +128,7 @@ extension ShopViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == Section.notice.rawValue {
+            footerView.delegate = self
             return footerView
         }
         return nil
@@ -145,17 +143,13 @@ extension ShopViewController: UITableViewDataSource {
         case Section.product.rawValue:
             switch indexPath.row {
             case Section.ProductRow.category.rawValue:
-                let cell = ProductCategoryTableViewCell.dequeue(from: tableView, for: indexPath)!
-                categoryCell = cell
-                cell.delegate = self
-                cell.configure(products: viewModel.products)
-                return cell
+                categoryCell.delegate = self
+                categoryCell.configure(products: viewModel.products)
+                return categoryCell
             case Section.ProductRow.item.rawValue:
-                let cell = CategoryItemsTableViewCell.dequeue(from: tableView, for: indexPath)!
-                itemCell = cell
-                cell.delegate = self
-                cell.configure(products: viewModel.products)
-                return cell
+                itemCell.delegate = self
+                itemCell.configure(products: viewModel.products)
+                return itemCell
             default:
                 break
             }
@@ -177,27 +171,27 @@ extension ShopViewController: UITableViewDataSource {
 
 extension ShopViewController: ProductCategoryTableViewCellDelegate {
     func didTapCategory(_ sender: ProductCategoryTableViewCell, index: Int) {
-        itemCell?.select(at: index)
+        itemCell.select(at: index)
+        updateTableView()
+    }
+    private func updateTableView() {
         UIView.animate(withDuration: 0) {
-            self.customView.tableView.beginUpdates()
-            self.customView.tableView.endUpdates()
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
     }
 }
 
 extension ShopViewController: CategoryItemsTableViewCellDelegate {
     func didScroll(_ sender: CategoryItemsTableViewCell, to index: Int) {
-        categoryCell?.select(at: index)
-        UIView.animate(withDuration: 0) {
-            self.customView.tableView.beginUpdates()
-            self.customView.tableView.endUpdates()
-        }
+        categoryCell.select(at: index)
+        updateTableView()
     }
 }
 
 extension ShopViewController: CompanyFooterViewDelegate {
     func didTapExpandButton(_ sender: CompanyFooterView) {
         sender.updateHeight(isShrink: !sender.isShrink)
-        customView.tableView.reloadData()
+        tableView.reloadData()
     }
 }

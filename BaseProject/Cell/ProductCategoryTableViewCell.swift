@@ -58,16 +58,12 @@ final class ProductCategoryTableViewCell: UITableViewCell {
     
     // MARK: UI
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = itemSpace
-        layout.sectionInset = UIEdgeInsets(top: 0, left: overflowSpace, bottom: 0, right: overflowSpace)
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(
+            horizontalWithMinimumInteritemSpacing: itemSpace,
+            sectionInset: UIEdgeInsets(side: overflowSpace))
         view.delegate = self
         view.dataSource = self
         view.register(CategoryCollectionViewCell.self)
-        view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = false
         return view
     }()
     
@@ -84,16 +80,11 @@ final class ProductCategoryTableViewCell: UITableViewCell {
     private let itemSpace: CGFloat = 5
 }
 
-extension ProductCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
-    
+extension ProductCategoryTableViewCell: UICollectionViewDelegateFlowLayout { 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let product = products?[safe: indexPath.row]
         let name = product?.category_name ?? ""
         return CategoryCollectionViewCell.getSize(name: name)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return itemSpace
     }
 }
 
