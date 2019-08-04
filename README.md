@@ -91,4 +91,4 @@ For setting exact size of paging, return collectionView frame size.
     }
 ```
 
-When tableViewCell has collectionView is updating, have to invalidate layout.
+When tableViewCell that has collectionView is updating, have to invalidate layout.
