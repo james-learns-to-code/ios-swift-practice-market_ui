@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1C1209B022B0DE99005D0972 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1209AF22B0DE99005D0972 /* AppDelegate.swift */; };
-		1C1209B222B0DE99005D0972 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1209B122B0DE99005D0972 /* ViewController.swift */; };
 		1C1209B722B0DE99005D0972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C1209B622B0DE99005D0972 /* Assets.xcassets */; };
 		1C1209BA22B0DE99005D0972 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C1209B822B0DE99005D0972 /* LaunchScreen.storyboard */; };
 		1C1209C522B0DE9A005D0972 /* BaseProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1209C422B0DE9A005D0972 /* BaseProjectTests.swift */; };
@@ -35,6 +34,7 @@
 		1CC76F2922B3D3E600D39971 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC76F2822B3D3E600D39971 /* ShopView.swift */; };
 		1CC76F2C22B3D43D00D39971 /* ShopNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC76F2B22B3D43D00D39971 /* ShopNetworkManager.swift */; };
 		1CC76F2E22B3D50200D39971 /* ShopResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC76F2D22B3D50200D39971 /* ShopResponseModel.swift */; };
+		1CDC364822F692970090B8DD /* UIEdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */; };
 		77E51B4336D2E2AB14E53FA7 /* Pods_BaseProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C72B98D968C2E5264CC41B6 /* Pods_BaseProject.framework */; };
 		9437FB3B22B40AFD00CE74C5 /* NetworkResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3A22B40AFD00CE74C5 /* NetworkResponseTests.swift */; };
 		9437FB3F22B4175D00CE74C5 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3E22B4175D00CE74C5 /* Binding.swift */; };
@@ -64,7 +64,6 @@
 /* Begin PBXFileReference section */
 		1C1209AC22B0DE99005D0972 /* BaseProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaseProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C1209AF22B0DE99005D0972 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1C1209B122B0DE99005D0972 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C1209B622B0DE99005D0972 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C1209B922B0DE99005D0972 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C1209BB22B0DE99005D0972 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 		1CC76F2822B3D3E600D39971 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
 		1CC76F2B22B3D43D00D39971 /* ShopNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopNetworkManager.swift; sourceTree = "<group>"; };
 		1CC76F2D22B3D50200D39971 /* ShopResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopResponseModel.swift; sourceTree = "<group>"; };
+		1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsetsExtension.swift; sourceTree = "<group>"; };
 		23C1E9C36FF6A75FAA492A1F /* Pods-BaseProjectUITests.analyze.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectUITests.analyze.xcconfig"; path = "Target Support Files/Pods-BaseProjectUITests/Pods-BaseProjectUITests.analyze.xcconfig"; sourceTree = "<group>"; };
 		3C983293F9A6E001BF2800C7 /* Pods-BaseProjectTests.analyze.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectTests.analyze.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProjectTests/Pods-BaseProjectTests.analyze.xcconfig"; sourceTree = "<group>"; };
 		3F3709EBF08AF81A3E0A3C76 /* Pods-BaseProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BaseProjectTests/Pods-BaseProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -262,7 +262,6 @@
 			children = (
 				9437FB4522B4230000CE74C5 /* ShopViewModel.swift */,
 				1CC76F2622B3D3AF00D39971 /* ShopViewController.swift */,
-				1C1209B122B0DE99005D0972 /* ViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -330,6 +329,7 @@
 				1C48757422F29F2F00E8485B /* UIViewExtension.swift */,
 				1C48757922F3285500E8485B /* UIImageView+DataLoaderExtension.swift */,
 				1C48757B22F3C81800E8485B /* DataLoader.swift */,
+				1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -605,7 +605,6 @@
 				1C48757E22F3CD2C00E8485B /* ProductCategoryTableViewCell.swift in Sources */,
 				1CC76F2C22B3D43D00D39971 /* ShopNetworkManager.swift in Sources */,
 				1C48757822F2CD2300E8485B /* BannerCollectionViewCell.swift in Sources */,
-				1C1209B222B0DE99005D0972 /* ViewController.swift in Sources */,
 				1C48757C22F3C81800E8485B /* DataLoader.swift in Sources */,
 				1C48757122F1D7FA00E8485B /* CollectionExtension.swift in Sources */,
 				9437FB3F22B4175D00CE74C5 /* Binding.swift in Sources */,
@@ -618,6 +617,7 @@
 				1C48758622F4067E00E8485B /* ItemCollectionViewCell.swift in Sources */,
 				1C48758122F3D56800E8485B /* CategoryCollectionViewCell.swift in Sources */,
 				9437FB4622B4230000CE74C5 /* ShopViewModel.swift in Sources */,
+				1CDC364822F692970090B8DD /* UIEdgeInsetsExtension.swift in Sources */,
 				1CC76F2922B3D3E600D39971 /* ShopView.swift in Sources */,
 				1C48758822F41BCB00E8485B /* ItemsCollectionViewCell.swift in Sources */,
 				1CC76F2E22B3D50200D39971 /* ShopResponseModel.swift in Sources */,

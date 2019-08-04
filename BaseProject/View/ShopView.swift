@@ -27,12 +27,26 @@ final class ShopView: UIView {
         return view
     }()
     
+    // MARK: UI
+    lazy var footerView: CompanyFooterView = {
+        let view = CompanyFooterView()
+        view.updateHeight(isShrink: true)
+        return view
+    }()
+    
+    lazy var categoryCell: ProductCategoryTableViewCell = {
+        let cell = ProductCategoryTableViewCell(style: .default, reuseIdentifier: "\(ProductCategoryTableViewCell.self)")
+        return cell
+    }()
+    lazy var itemCell: CategoryItemsTableViewCell = {
+        let cell = CategoryItemsTableViewCell(style: .default, reuseIdentifier: "\(CategoryItemsTableViewCell.self)")
+        return cell
+    }()
+    
     // MARK: Lifecycle
-    required init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    required init() {
         super.init(frame: .zero)
         setup()
-        tableView.delegate = delegate
-        tableView.dataSource = dataSource
     }
     override init(frame: CGRect) {
         fatalError("init(frame:) has not been implemented")

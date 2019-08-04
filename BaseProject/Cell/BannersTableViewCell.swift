@@ -9,6 +9,7 @@
 import UIKit
 
 final class BannersTableViewCell: UITableViewCell {
+    typealias SelfClass = BannersTableViewCell
     
     // MARK: Interface
     func configure(banners: [BannerModel]?) {
@@ -38,29 +39,23 @@ final class BannersTableViewCell: UITableViewCell {
     
     // MARK: UI
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = itemSpace
-        let totalItemSpacing = itemSpace + overflowSpace
-        layout.sectionInset = UIEdgeInsets(top: 0, left: totalItemSpacing, bottom: 0, right: totalItemSpacing)
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(
+            horizontalWithMinimumInteritemSpacing: 0,
+            minimumLineSpacing: SelfClass.lineSpace,
+            sectionInset: UIEdgeInsets(side: SelfClass.totalSpace))
         view.delegate = self
         view.dataSource = self
         view.register(BannerCollectionViewCell.self)
-        view.clipsToBounds = false
-        view.alwaysBounceHorizontal = true
-        view.decelerationRate = .fast
-        view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = false
         return view
     }()
     
     // MARK: Peek scrolling
 
-    private let overflowSpace: CGFloat = 20
-    private let itemSpace: CGFloat = 20
+    private static let overflowSpace: CGFloat = 20
+    private static let lineSpace: CGFloat = 20
+    private static let totalSpace: CGFloat = lineSpace + overflowSpace
     private var itemSize: CGSize {
-        let totalMargin = (itemSpace + overflowSpace) * 2
+        let totalMargin = SelfClass.totalSpace * 2
         let width = collectionView.frame.size.width - totalMargin
         let height = BannersTableViewCell.getHeight(width: width)
         return CGSize(width: width, height: height)
@@ -76,13 +71,8 @@ final class BannersTableViewCell: UITableViewCell {
 }
 
 extension BannersTableViewCell: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return itemSize
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return itemSpace
     }
 }
 
@@ -103,7 +93,7 @@ extension BannersTableViewCell: UICollectionViewDelegate {
         withVelocity velocity: CGPoint,
         targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        let pageWidth = itemSize.width + itemSpace
+        let pageWidth = itemSize.width + SelfClass.lineSpace
         // Scroll if user scrolling only 10% of page width
         let snapTolerance: CGFloat = 0.1
         let snapDelta: CGFloat = (scrollView.contentOffset.x > scrollBeginOffset.x) ?

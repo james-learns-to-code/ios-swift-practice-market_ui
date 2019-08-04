@@ -37,16 +37,12 @@ final class ItemsCollectionViewCell: UICollectionViewCell {
     }
     
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: ItemsCollectionViewCell.sectionSpace, bottom: 0, right: ItemsCollectionViewCell.sectionSpace)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = ItemsCollectionViewCell.itemSpace
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(
+            fixedMinimumInteritemSpacing: ItemsCollectionViewCell.itemSpace,
+            sectionInset: UIEdgeInsets(side: ItemsCollectionViewCell.sectionSpace))
         view.delegate = self
         view.dataSource = self
         view.register(ItemCollectionViewCell.self)
-        view.isScrollEnabled = false
-        view.backgroundColor = .clear
         return view
     }()
     

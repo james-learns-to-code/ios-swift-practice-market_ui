@@ -22,8 +22,7 @@ final class CompanyFooterView: UIView {
     // MARK: Interface
     
     var isShrink: Bool {
-        return (frame.size.height == SelfClass.height)
-            ? false : true
+        return (frame.height == SelfClass.height)  ? false : true
     }
     
     func updateHeight(isShrink: Bool) {
