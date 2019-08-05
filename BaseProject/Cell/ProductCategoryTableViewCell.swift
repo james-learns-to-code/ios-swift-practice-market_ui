@@ -83,8 +83,7 @@ final class ProductCategoryTableViewCell: UITableViewCell {
 extension ProductCategoryTableViewCell: UICollectionViewDelegateFlowLayout { 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let product = products?[safe: indexPath.row]
-        let name = product?.category_name ?? ""
-        return CategoryCollectionViewCell.getSize(name: name)
+        return CategoryCollectionViewCell.getSize(name: product?.category_name)
     }
 }
 

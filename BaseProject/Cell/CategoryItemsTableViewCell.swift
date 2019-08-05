@@ -76,8 +76,7 @@ final class CategoryItemsTableViewCell: UITableViewCell {
 
     private static func getItemSize(width: CGFloat, items: [ItemModel]?) -> CGSize {
         let itemSize = ItemsCollectionViewCell.getItemSize(width: width)
-        let count = (items?.count ?? 0)
-        let maxCount = ShopViewModel.getCount(count, max: ShopViewModel.numOfMaxItem)
+        let maxCount = (items?.count ?? 0).maximum(ShopViewModel.numOfMaxItem)
         let rowNum = Int(ceil(Double(maxCount) / Double(ItemsCollectionViewCell.numOfRow)))
         let itemsHeight = itemSize.height * CGFloat(rowNum)
         return CGSize(width: CGFloat(Int(width)), height: CGFloat(Int(itemsHeight)))
@@ -120,9 +119,8 @@ extension CategoryItemsTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = ItemsCollectionViewCell.dequeue(from: collectionView, for: indexPath)!
-        if let items = products?[safe: indexPath.row]?.items {
-            cell.configure(items: items)
-        }
+        let items = products?[safe: indexPath.row]?.items
+        cell.configure(items: items)
         return cell
     }
 }

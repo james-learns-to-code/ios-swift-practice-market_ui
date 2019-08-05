@@ -74,8 +74,7 @@ extension ItemsCollectionViewCell: UICollectionViewDelegate {
 extension ItemsCollectionViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = items?.count ?? 0
-        let maxCount = ShopViewModel.getCount(count, max: ShopViewModel.numOfMaxItem)
+        let maxCount = (items?.count ?? 0).maximum(ShopViewModel.numOfMaxItem)
         return maxCount
     }
     
