@@ -76,10 +76,10 @@ final class CategoryItemsTableViewCell: UITableViewCell {
 
     private static func getItemSize(width: CGFloat, items: [ItemModel]?) -> CGSize {
         let itemSize = ItemsCollectionViewCell.getItemSize(width: width)
-        let maxCount = (items?.count ?? 0).maximum(ShopViewModel.numOfMaxItem)
-        let rowNum = Int(ceil(Double(maxCount) / Double(ItemsCollectionViewCell.numOfRow)))
-        let itemsHeight = itemSize.height * CGFloat(rowNum)
-        return CGSize(width: CGFloat(Int(width)), height: CGFloat(Int(itemsHeight)))
+        let maxCount = min(items?.count ?? 0, ShopViewModel.numOfMaxItem)
+        let numOfRow = Int(ceil(CGFloat(maxCount) / ItemsCollectionViewCell.numOfRow))
+        let itemsHeight = itemSize.height * CGFloat(numOfRow)
+        return CGSize(width: width, height: itemsHeight)
     }
 }
 

@@ -27,9 +27,6 @@ final class ShopViewModel {
     static let noticeSectionTitle = "Notice"
     static let numOfMaxItem = 6
     static let bottomInset = 100
-    static func getCount(_ count: Int, max: Int) -> Int {
-        return count > max ? max : count
-    }
 
     // MARK: Data
     
