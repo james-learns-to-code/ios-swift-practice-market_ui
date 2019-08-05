@@ -220,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				1C48757722F2CD2300E8485B /* BannerCollectionViewCell.swift */,
-				1C48757F22F3D55800E8485B /* Category */,
 			);
 			path = Banner;
 			sourceTree = "<group>";
@@ -343,6 +342,7 @@
 				1C48756E22F1D54A00E8485B /* BannersTableViewCell.swift */,
 				1C48757622F2CD1400E8485B /* Banner */,
 				1C48757D22F3CD2C00E8485B /* ProductCategoryTableViewCell.swift */,
+				1C48757F22F3D55800E8485B /* Category */,
 				1C48758322F400E800E8485B /* CategoryItemsTableViewCell.swift */,
 				1C48758222F400A900E8485B /* Items */,
 				1C48758B22F4654700E8485B /* RecentTableViewCell.swift */,

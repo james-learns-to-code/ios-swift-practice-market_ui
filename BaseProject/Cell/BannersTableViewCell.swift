@@ -96,7 +96,7 @@ extension BannersTableViewCell: UICollectionViewDelegate {
         let pageWidth = itemSize.width + SelfClass.lineSpace
         // Scroll if user scrolling only 10% of page width
         let snapTolerance: CGFloat = 0.1
-        let snapDelta: CGFloat = (scrollView.contentOffset.x > scrollBeginOffset.x) ?
+        let snapDelta: CGFloat = scrollView.contentOffset.x > scrollBeginOffset.x ?
             1 - snapTolerance : snapTolerance
         let widthForSnapping = pageWidth * snapDelta
         let snappedOffest = scrollView.contentOffset.x + widthForSnapping

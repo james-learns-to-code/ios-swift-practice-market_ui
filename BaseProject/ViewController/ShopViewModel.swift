@@ -52,6 +52,7 @@ final class ShopViewModel {
     }
 
     // MARK: TableView
+    
     let numberOfSection = Section.allCases.count
     func numberOfRowsInSection(_ section: Int) -> Int {
         switch section {
