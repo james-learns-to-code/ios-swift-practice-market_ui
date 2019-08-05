@@ -48,19 +48,20 @@ final class ItemsCollectionViewCell: UICollectionViewCell {
     
     static let sectionSpace: CGFloat = 30
     static let itemSpace: CGFloat = 5
-    static let numOfRow = 2
+    static let numOfRow: CGFloat = 2
     static func getItemSize(width: CGFloat) -> CGSize {
-        let width = width - (sectionSpace * 2)
-        let itemWidth = CGFloat((Int(width) / numOfRow) - ((numOfRow - 1) * Int(itemSpace)))
+        let widthWithoutSpace = width - (sectionSpace * 2)
+        let widthDividedRow = floor(widthWithoutSpace / numOfRow)
+        let spaceDividedRow = (numOfRow - 1) * itemSpace
+        let itemWidth = widthDividedRow - spaceDividedRow
         let itemHeight = itemWidth + ItemCollectionViewCell.labelHeight
-        return CGSize(width: CGFloat(Int(itemWidth)), height: CGFloat(Int(itemHeight)))
+        return CGSize(width: itemWidth, height: itemHeight)
     }
 }
 
 extension ItemsCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width
-        let size = ItemsCollectionViewCell.getItemSize(width: width)
+        let size = ItemsCollectionViewCell.getItemSize(width: collectionView.frame.width)
         return size
     }
 }
@@ -74,7 +75,7 @@ extension ItemsCollectionViewCell: UICollectionViewDelegate {
 extension ItemsCollectionViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let maxCount = (items?.count ?? 0).maximum(ShopViewModel.numOfMaxItem)
+        let maxCount = min(items?.count ?? 0, ShopViewModel.numOfMaxItem)
         return maxCount
     }
     
