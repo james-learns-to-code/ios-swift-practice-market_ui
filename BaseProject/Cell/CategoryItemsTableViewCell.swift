@@ -55,7 +55,10 @@ final class CategoryItemsTableViewCell: UITableViewCell {
             collectionView.reloadData()
         }
     }
- 
+    private var productCount: Int {
+        return products?.count ?? 0
+    }
+    
     // MARK: UI
     
     override func layoutSubviews() {
@@ -106,15 +109,17 @@ extension CategoryItemsTableViewCell: UICollectionViewDelegate {
         delegate?.didScroll(self, to: currentIndexPath.row)
     }
     private func getCurrentIndexPathFrom(_ collectionView: UICollectionView) -> IndexPath {
-        let newPage = Int(floor(collectionView.contentOffset.x / max(1, collectionView.frame.width)))
-        return IndexPath(row: newPage, section: 0)
+        let newPageIndex = Int(floor(collectionView.contentOffset.x / max(1, collectionView.frame.width)))
+        var safeNewPageIndex = min(newPageIndex, productCount - 1)
+        safeNewPageIndex = max(safeNewPageIndex, 0)
+        return IndexPath(row: safeNewPageIndex, section: 0)
     }
 }
 
 extension CategoryItemsTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return products?.count ?? 0
+        return productCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
