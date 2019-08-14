@@ -9,7 +9,7 @@
 import UIKit
 
 final class ShopView: UIView {
-     
+    
     // MARK: UI
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
@@ -18,6 +18,7 @@ final class ShopView: UIView {
         view.sectionFooterHeight = 0
         view.contentInset.top = -44
         view.contentInset.bottom = CGFloat(ShopViewModel.bottomInset)
+        
         view.register(UITableViewCell.self)
         view.register(BannersTableViewCell.self)
         view.register(ProductCategoryTableViewCell.self)
@@ -27,7 +28,6 @@ final class ShopView: UIView {
         return view
     }()
     
-    // MARK: UI
     lazy var footerView: CompanyFooterView = {
         let view = CompanyFooterView()
         view.updateHeight(isShrink: true)

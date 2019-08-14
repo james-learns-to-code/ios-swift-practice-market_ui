@@ -37,6 +37,9 @@ final class RecentTableViewCell: UITableViewCell {
             collectionView.reloadData()
         }
     }
+    private var itemCount: Int {
+        return items?.count ?? 0
+    }
     
     // MARK: UI
     
@@ -70,7 +73,7 @@ extension RecentTableViewCell: UICollectionViewDelegate {
 extension RecentTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items?.count ?? 0
+        return itemCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

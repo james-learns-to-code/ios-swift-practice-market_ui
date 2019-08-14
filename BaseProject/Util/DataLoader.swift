@@ -11,15 +11,15 @@ import UIKit
 final class DataLoader {
     static var shared = DataLoader()
     
-    typealias LoadDictType = [Int: Any]
+    typealias LoadDictType = [Int: UIImageViewLoader]
     private var loadDict = LoadDictType()
     
-    let dictCount = 100
+    private let dictCount = 100
     
     func loaderForImageView(_ imageView: UIImageView) -> UIImageViewLoader {
         let hash = imageView.hashValue
         if let loader = loadDict[hash] {
-            return loader as! UIImageViewLoader
+            return loader
         }
         removeFirstIn(&loadDict, ifExceed: dictCount)
         let loader = UIImageViewLoader(imageView: imageView)
@@ -43,7 +43,13 @@ final class UIImageViewLoader {
     private var task: URLSessionTask?
     
     func setImageWithUrlString(_ urlString: String?) {
-        guard let url = URL(string: urlString ?? "") else { return }
+        guard let urlString = urlString else { return }
+        let url = URL(string: urlString)
+        setImageWithUrl(url)
+    }
+    
+    func setImageWithUrl(_ url: URL?) {
+        guard let url = url else { return }
         guard isAlreadyRequesting(url: url) == false else { return }
         task?.cancel()
         let request = URLRequest(url: url)

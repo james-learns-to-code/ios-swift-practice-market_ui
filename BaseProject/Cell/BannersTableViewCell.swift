@@ -12,8 +12,14 @@ final class BannersTableViewCell: UITableViewCell {
     typealias SelfClass = BannersTableViewCell
     
     // MARK: Interface
+    
     func configure(banners: [BannerModel]?) {
         self.banners = banners
+    }
+    
+    static func getHeight(width: CGFloat) -> CGFloat {
+        let height = BannerCollectionViewCell.getHeight(width: width)
+        return height
     }
     
     // MARK: Lifecycle
@@ -35,6 +41,9 @@ final class BannersTableViewCell: UITableViewCell {
         didSet {
             collectionView.reloadData()
         }
+    }
+    private var bannerCount: Int {
+        return banners?.count ?? 0
     }
     
     // MARK: UI
@@ -61,13 +70,6 @@ final class BannersTableViewCell: UITableViewCell {
         return CGSize(width: width, height: height)
     }
     private var scrollBeginOffset: CGPoint = .zero
-    
-    // MARK: Height
-    
-    static func getHeight(width: CGFloat) -> CGFloat {
-        let height = BannerCollectionViewCell.getHeight(width: width)
-        return height
-    }
 }
 
 extension BannersTableViewCell: UICollectionViewDelegateFlowLayout {
@@ -109,7 +111,7 @@ extension BannersTableViewCell: UICollectionViewDelegate {
 extension BannersTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return banners?.count ?? 0
+        return bannerCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

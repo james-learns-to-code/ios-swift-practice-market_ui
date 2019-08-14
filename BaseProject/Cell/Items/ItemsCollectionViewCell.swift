@@ -35,6 +35,9 @@ final class ItemsCollectionViewCell: UICollectionViewCell {
             collectionView.reloadData()
         }
     }
+    private var itemCount: Int {
+        return items?.count ?? 0
+    }
     
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(
@@ -46,8 +49,8 @@ final class ItemsCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    static let sectionSpace: CGFloat = 30
-    static let itemSpace: CGFloat = 5
+    private static let sectionSpace: CGFloat = 30
+    private static let itemSpace: CGFloat = 5
     static let numOfRow: CGFloat = 2
     static func getItemSize(width: CGFloat) -> CGSize {
         let widthWithoutSpace = width - (sectionSpace * 2)
@@ -75,7 +78,7 @@ extension ItemsCollectionViewCell: UICollectionViewDelegate {
 extension ItemsCollectionViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let maxCount = min(items?.count ?? 0, ShopViewModel.numOfMaxItem)
+        let maxCount = min(itemCount, ShopViewModel.numOfMaxItem)
         return maxCount
     }
     

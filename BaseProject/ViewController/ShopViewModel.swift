@@ -48,19 +48,32 @@ final class ShopViewModel {
         return notices?[safe: index]
     }
 
+    var bannerCount: Int {
+        return banners?.count ?? 0
+    }
+    var productCount: Int {
+        return products?.count ?? 0
+    }
+    var recentCount: Int {
+        return recents?.count ?? 0
+    }
+    var noticeCount: Int {
+        return notices?.count ?? 0
+    }
+    
     // MARK: TableView
     
     let numberOfSection = Section.allCases.count
     func numberOfRowsInSection(_ section: Int) -> Int {
         switch section {
         case Section.banner.rawValue:
-            return (banners?.count ?? 0) > 0 ? 1 : 0
+            return bannerCount > 0 ? 1 : 0
         case Section.product.rawValue:
-            return (products?.count ?? 0) > 0 ? 2 : 0
+            return productCount > 0 ? 2 : 0
         case Section.recent.rawValue:
-            return (recents?.count ?? 0) > 0 ? 1 : 0
+            return recentCount > 0 ? 1 : 0
         case Section.notice.rawValue:
-            return notices?.count ?? 0
+            return noticeCount
         default:
             return 0
         }
