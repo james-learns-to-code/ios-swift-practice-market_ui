@@ -11,10 +11,6 @@ import UIKit
 final class BannerCollectionViewCell: UICollectionViewCell {
     typealias SelfClass = BannerCollectionViewCell
     
-    static let topMargin: CGFloat = 10
-    static let imageBottomMargin: CGFloat = 10
-    static let labelHeight: CGFloat = 60
-
     // MARK: Interface
     
     func configure(imageUrlStr: String?, title: String?, subTitle: String?) {
@@ -60,6 +56,10 @@ final class BannerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private static let topMargin: CGFloat = 10
+    private static let imageBottomMargin: CGFloat = 10
+    private static let labelHeight: CGFloat = 60
+
     private func setup() {
         contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
