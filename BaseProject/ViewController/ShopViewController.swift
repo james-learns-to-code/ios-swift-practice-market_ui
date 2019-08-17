@@ -20,10 +20,7 @@ final class ShopViewController: UIViewController {
 
     // MARK: View switching
     
-    private lazy var customView: ShopView = {
-        let view = ShopView()
-        return view
-    }()
+    private lazy var customView = ShopView()
     
     override func loadView() {
         super.loadView()
@@ -38,7 +35,7 @@ final class ShopViewController: UIViewController {
         setupNavigationBar()
         tableView.delegate = self
         tableView.dataSource = self
-        setupBinding()
+        setupBind()
     }
  
     private func setupNavigationBar() {
@@ -48,13 +45,28 @@ final class ShopViewController: UIViewController {
         navBar?.setValue(true, forKey: "hidesShadow")
         navBar?.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        title = "BTS"
+        title = ViewModel.navTitle
     }
     
-    private func setupBinding() {
+    private func setupBind() {
+        
         viewModel.feed.bind { [weak self] feed in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
+            }
+        }
+        
+        viewModel.error.bind { [weak self] error in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: error?.localizedDescription,
+                    doneButtonTitle: "OK"
+                ) { action in
+                    self.dismiss(animated: true)
+                }
+                self.present(alert, animated: true)
             }
         }
     }

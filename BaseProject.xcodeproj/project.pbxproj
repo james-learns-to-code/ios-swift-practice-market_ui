@@ -12,6 +12,7 @@
 		1C1209BA22B0DE99005D0972 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C1209B822B0DE99005D0972 /* LaunchScreen.storyboard */; };
 		1C1209C522B0DE9A005D0972 /* BaseProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1209C422B0DE9A005D0972 /* BaseProjectTests.swift */; };
 		1C1209D022B0DE9A005D0972 /* BaseProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1209CF22B0DE9A005D0972 /* BaseProjectUITests.swift */; };
+		1C18E7E2230868D300485521 /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C18E7E1230868D300485521 /* UIAlertControllerExtension.swift */; };
 		1C48756B22F1D07600E8485B /* DataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C48756A22F1D07600E8485B /* DataBuilder.swift */; };
 		1C48756D22F1D48800E8485B /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C48756C22F1D48800E8485B /* UITableViewExtension.swift */; };
 		1C48756F22F1D54A00E8485B /* BannersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C48756E22F1D54A00E8485B /* BannersTableViewCell.swift */; };
@@ -37,7 +38,7 @@
 		1CDC364822F692970090B8DD /* UIEdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */; };
 		77E51B4336D2E2AB14E53FA7 /* Pods_BaseProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C72B98D968C2E5264CC41B6 /* Pods_BaseProject.framework */; };
 		9437FB3B22B40AFD00CE74C5 /* NetworkResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3A22B40AFD00CE74C5 /* NetworkResponseTests.swift */; };
-		9437FB3F22B4175D00CE74C5 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3E22B4175D00CE74C5 /* Binding.swift */; };
+		9437FB3F22B4175D00CE74C5 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB3E22B4175D00CE74C5 /* Bindable.swift */; };
 		9437FB4422B422AF00CE74C5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB4322B422AF00CE74C5 /* NetworkManager.swift */; };
 		9437FB4622B4230000CE74C5 /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437FB4522B4230000CE74C5 /* ShopViewModel.swift */; };
 		BFC9E84AFF25960F5EDF9FB1 /* libPods-BaseProjectUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C1A6A20967138EEC099ACBE /* libPods-BaseProjectUITests.a */; };
@@ -75,6 +76,7 @@
 		1C1209D122B0DE9A005D0972 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C1209DD22B0E119005D0972 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		1C1209DE22B0E119005D0972 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		1C18E7E1230868D300485521 /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		1C48756A22F1D07600E8485B /* DataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBuilder.swift; sourceTree = "<group>"; };
 		1C48756C22F1D48800E8485B /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		1C48756E22F1D54A00E8485B /* BannersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannersTableViewCell.swift; sourceTree = "<group>"; };
@@ -110,7 +112,7 @@
 		7DF7349B5DAC0BD306BE4B31 /* Pods-BaseProjectTests.analyze.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectTests.analyze.xcconfig"; path = "Target Support Files/Pods-BaseProjectTests/Pods-BaseProjectTests.analyze.xcconfig"; sourceTree = "<group>"; };
 		8C72B98D968C2E5264CC41B6 /* Pods_BaseProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9437FB3A22B40AFD00CE74C5 /* NetworkResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseTests.swift; sourceTree = "<group>"; };
-		9437FB3E22B4175D00CE74C5 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		9437FB3E22B4175D00CE74C5 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		9437FB4322B422AF00CE74C5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		9437FB4522B4230000CE74C5 /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
 		A11D15BCF582F81A05CB3B74 /* Pods-BaseProjectUITests.analyze.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProjectUITests.analyze.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProjectUITests/Pods-BaseProjectUITests.analyze.xcconfig"; sourceTree = "<group>"; };
@@ -320,7 +322,7 @@
 		9437FB3D22B4174F00CE74C5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				9437FB3E22B4175D00CE74C5 /* Binding.swift */,
+				9437FB3E22B4175D00CE74C5 /* Bindable.swift */,
 				1C48756A22F1D07600E8485B /* DataBuilder.swift */,
 				1C48756C22F1D48800E8485B /* UITableViewExtension.swift */,
 				1C48757022F1D7FA00E8485B /* CollectionExtension.swift */,
@@ -329,6 +331,7 @@
 				1C48757922F3285500E8485B /* UIImageView+DataLoaderExtension.swift */,
 				1C48757B22F3C81800E8485B /* DataLoader.swift */,
 				1CDC364722F692970090B8DD /* UIEdgeInsetsExtension.swift */,
+				1C18E7E1230868D300485521 /* UIAlertControllerExtension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -606,8 +609,9 @@
 				1CC76F2C22B3D43D00D39971 /* ShopNetworkManager.swift in Sources */,
 				1C48757822F2CD2300E8485B /* BannerCollectionViewCell.swift in Sources */,
 				1C48757C22F3C81800E8485B /* DataLoader.swift in Sources */,
+				1C18E7E2230868D300485521 /* UIAlertControllerExtension.swift in Sources */,
 				1C48757122F1D7FA00E8485B /* CollectionExtension.swift in Sources */,
-				9437FB3F22B4175D00CE74C5 /* Binding.swift in Sources */,
+				9437FB3F22B4175D00CE74C5 /* Bindable.swift in Sources */,
 				1C48756B22F1D07600E8485B /* DataBuilder.swift in Sources */,
 				1C48758422F400E800E8485B /* CategoryItemsTableViewCell.swift in Sources */,
 				1C1209B022B0DE99005D0972 /* AppDelegate.swift in Sources */,
