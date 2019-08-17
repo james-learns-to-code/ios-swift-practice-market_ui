@@ -22,6 +22,7 @@ final class ShopViewModel {
         }
     }
     
+    static let navTitle: "BTS"
     static let productSectionTitle = "Product"
     static let recentSectionTitle = "Recently Viewed"
     static let noticeSectionTitle = "Notice"
@@ -30,8 +31,9 @@ final class ShopViewModel {
 
     // MARK: Data
     
-    var feed = Binding<ShopResponseModel>()
-    
+    let feed = PropertyBindable<ShopResponseModel>()
+    let error = PropertyBindable<NetworkError>()
+
     var banners: [BannerModel]? {
         return feed.value?.banners
     }
@@ -105,10 +107,9 @@ final class ShopViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let value):
-                print(value)
                 self.feed.value = value
             case .failure(let error):
-                print(error)
+                self.error.value = error
             }
         }
     }
