@@ -23,7 +23,6 @@ final class ShopViewController: UIViewController {
     private lazy var customView = ShopView()
     
     override func loadView() {
-        super.loadView()
         view = customView
         setup()
         viewModel.fetchFeed()
